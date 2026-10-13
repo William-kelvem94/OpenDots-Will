@@ -37,12 +37,12 @@ export function connectionTools(
                 tool: current.tool.name,
                 arguments: input,
               }),
-              instruction: `Call ${connectionActionTool.name} with this approvalId and a one-sentence summary of what it will do. Then wait for the owner.`,
+              instruction: `Chame ${connectionActionTool.name} com este approvalId e um resumo, em uma frase, do que a ação fará. Em seguida, aguarde o proprietário.`,
             }
           : {
               status: 'unavailable',
               message:
-                'This action needs owner approval in the OpenDots web app. Ask the owner to continue there.',
+                'Esta ação precisa da aprovação do proprietário no OpenDots. Peça que ele continue pelo aplicativo web.',
             };
       const result = await connections.call(current, input, signal);
       check();

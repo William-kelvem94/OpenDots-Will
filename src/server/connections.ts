@@ -129,7 +129,7 @@ export function normalizeResult(result: unknown): ConnectionActionResult {
 }
 const failure = (error: unknown) => {
   if (!(error instanceof Error))
-    return 'Could not reach the connected service.';
+    return 'Não foi possível acessar o serviço conectado.';
   if (error.name === 'AbortError' || error.name === 'TimeoutError')
     return 'The connected service did not respond in time.';
   const status = (error as { code?: unknown }).code;
@@ -140,8 +140,8 @@ const failure = (error: unknown) => {
     error.name === 'UnauthorizedError' ||
     error.constructor.name === 'UnauthorizedError'
   )
-    return 'The connected service rejected the credentials. Check the bearer token.';
-  return `Could not reach the connected service${error.message ? `: ${error.message.slice(0, 200)}` : '.'}`;
+    return 'O serviço conectado recusou as credenciais. Verifique o token bearer.';
+  return `Não foi possível acessar o serviço conectado${error.message ? `: ${error.message.slice(0, 200)}` : '.'}`;
 };
 export class ConnectionService {
   constructor(
@@ -274,7 +274,7 @@ export class ConnectionService {
     );
     if (!match)
       throw new Error(
-        'This tool is no longer enabled for this Dot. Nothing was run.',
+        'Esta ferramenta não está mais habilitada para este Dot. Nada foi executado.',
       );
     return match;
   }

@@ -75,7 +75,7 @@ export function connectionRoutes(
       throw new Error('Approval request not found.');
     if (Date.now() - approval.createdAt > APPROVAL_TTL_MS)
       throw new Error(
-        'This approval request expired. Ask the Dot to try again.',
+        'Esta solicitação de aprovação expirou. Peça ao Dot para tentar novamente.',
       );
     return {
       approval,

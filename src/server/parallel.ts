@@ -187,12 +187,12 @@ export async function parallelSources(
       warn,
     );
     if (urls.length > 5)
-      warn('Only the first five URLs were read; coverage is limited.');
+      warn('Somente as cinco primeiras URLs foram lidas; a cobertura é limitada.');
     if (pages.length < Math.min(urls.length, 5))
-      warn('Some requested sources could not be read; coverage is incomplete.');
+      warn('Não foi possível ler algumas das fontes solicitadas; a cobertura está incompleta.');
     boundedSignal.throwIfAborted();
     if (!pages.length)
-      throw new Error('Parallel could not extract usable source evidence.');
+      throw new Error('O Parallel não conseguiu extrair evidências utilizáveis das fontes.');
     return pages;
   } finally {
     await client.close().catch(() => {});

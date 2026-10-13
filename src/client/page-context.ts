@@ -6,7 +6,7 @@ export function contextualMessage(
 ) {
   if (context === undefined)
     throw new Error(
-      'Conversation context has not loaded. Retry before sending.',
+      'O contexto da conversa ainda não foi carregado. Tente novamente antes de enviar.',
     );
   return context
     ? `From [${context.title.replace(/[[\]\\\r\n]/g, '')}](/#/spaces/${context.spaceId}/pages/${context.id}):\n\n${text}`

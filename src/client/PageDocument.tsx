@@ -317,7 +317,7 @@ export function PageDocument({
               <>
                 <div className="source-mode-label">
                   <FileCode2 size={15} />
-                  <span>Fonte Markdown</span>
+                  <span>Código-fonte Markdown</span>
                 </div>
                 {!safety.supported && (
                   <p className="source-mode-reason">{safety.reason}</p>

@@ -84,7 +84,7 @@ export function useVoice(
       setError(
         e instanceof Error
           ? e.message
-          : 'Call ended, but its receipt could not be saved.',
+          : 'A chamada terminou, mas não foi possível salvar seu registro.',
       );
     } finally {
       closeMedia();
@@ -131,7 +131,7 @@ export function useVoice(
             current.controlPollFailures += 1;
             if (current.controlPollFailures < CONTROL_POLL_FAILURE_LIMIT)
               return;
-            setError('Call control connection was lost.');
+            setError('A conexão de controle da chamada foi perdida.');
             void end();
           });
     }, 2000);
@@ -180,7 +180,7 @@ export function useVoice(
         void audio.play().catch(() => {
           if (!current.cancelled)
             setError(
-              'Audio playback was blocked. Check your browser audio permissions.',
+              'A reprodução de áudio foi bloqueada. Verifique as permissões de áudio do navegador.',
             );
         });
       };
@@ -203,12 +203,12 @@ export function useVoice(
             current.disconnectTimer = undefined;
             if (current.cancelled || pc.connectionState !== 'disconnected')
               return;
-            setError('The voice connection dropped.');
+            setError('A conexão de voz foi interrompida.');
             void end();
           }, 5000);
         }
         if (pc.connectionState === 'failed') {
-          setError('The voice connection dropped.');
+          setError('A conexão de voz foi interrompida.');
           void end();
         }
       };
@@ -243,7 +243,7 @@ export function useVoice(
             data.type ===
             'conversation.item.input_audio_transcription.completed'
           ) {
-            current.transcript.push(`You: ${data.transcript}`);
+            current.transcript.push(`Você: ${data.transcript}`);
             setUserCaption(data.transcript);
           }
           if (data.type === 'response.output_audio_transcript.done')
@@ -251,7 +251,7 @@ export function useVoice(
         }
         if (data.type === 'error')
           setError(
-            'The voice provider reported a session error. End the call and retry.',
+            'O provedor de voz informou um erro na sessão. Encerre a chamada e tente novamente.',
           );
         if (
           data.type !== 'response.function_call_arguments.done' ||
@@ -270,7 +270,7 @@ export function useVoice(
             !('request' in args) ||
             typeof args.request !== 'string'
           )
-            throw new Error('Invalid compute request.');
+            throw new Error('Solicitação de execução inválida.');
           const result = await api<{ text: string }>(
             `/voice/calls/${current.id}/compute`,
             'POST',
@@ -282,7 +282,7 @@ export function useVoice(
           );
           output = result.text;
         } catch (e) {
-          output = `Compute failed: ${e instanceof Error ? e.message : 'Unknown error'}`;
+          output = `A execução falhou: ${e instanceof Error ? e.message : 'Erro desconhecido'}`;
         }
         if (!current.cancelled && channel.readyState === 'open') {
           channel.send(
@@ -331,7 +331,7 @@ export function useVoice(
       closeMedia();
       session.current = undefined;
       setStatus('idle');
-      setError(e instanceof Error ? e.message : 'Could not connect the call.');
+      setError(e instanceof Error ? e.message : 'Não foi possível conectar a chamada.');
     } finally {
       if (attempt === generation.current) connecting.current = false;
     }

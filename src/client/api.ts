@@ -12,7 +12,7 @@ export class ApiError extends Error {
     super(message);
   }
 }
-function translateApiError(message: string): string {
+export function translateApiError(message: string): string {
   const exact: Record<string, string> = {
     'Server returned an unreadable response.': 'O servidor retornou uma resposta ilegível.',
     'The service request failed. Check the server configuration and try again.': 'A solicitação falhou. Verifique a configuração do servidor e tente novamente.',
@@ -67,11 +67,41 @@ function translateApiError(message: string): string {
     'Parallel web research is disabled.': 'A pesquisa paralela na web está desativada.',
     'Parallel returned an invalid response.': 'A pesquisa paralela retornou uma resposta inválida.',
     'Parallel could not extract usable source evidence.': 'A pesquisa paralela não conseguiu extrair evidências utilizáveis das fontes.',
+    'Parallel could not complete the web request. Retry later or check the provider quota.': 'A pesquisa paralela não conseguiu concluir a solicitação à web. Tente novamente mais tarde ou verifique a cota do provedor.',
+    'Parallel web research is disabled.': 'A pesquisa paralela na web está desativada.',
+    'Parallel returned an invalid response.': 'A pesquisa paralela retornou uma resposta inválida.',
+    'Parallel found no usable sources. Try a more specific research request.': 'A pesquisa paralela não encontrou fontes utilizáveis. Tente fazer uma solicitação de pesquisa mais específica.',
+    'Browser returned an invalid or empty source response.': 'O navegador retornou uma resposta de fonte inválida ou vazia.',
+    'Could not read the source.': 'Não foi possível ler a fonte.',
+    'This call has ended.': 'Esta chamada foi encerrada.',
+    'Dot is paused.': 'O Dot está pausado.',
+    'End the current call before starting another.': 'Encerre a chamada atual antes de iniciar outra.',
+    'An audio WebRTC SDP offer is required.': 'É necessária uma oferta SDP de áudio do WebRTC.',
+    'Call connection was cancelled or timed out.': 'A conexão da chamada foi cancelada ou expirou.',
+    'Call session expired; start a new call.': 'A sessão da chamada expirou; inicie uma nova chamada.',
+    'A conversation and audio SDP offer are required.': 'É necessária uma conversa e uma oferta SDP de áudio.',
+    'A bounded compute request and tool call ID are required.': 'É necessária uma solicitação de execução limitada e um ID de chamada da ferramenta.',
+    'Not found.': 'Não encontrado.',
+    'Dot not found.': 'Dot não encontrado.',
+    'Call not found.': 'Chamada não encontrada.',
+    'Conversation does not belong to this Dot and owner.': 'A conversa não pertence a este Dot e proprietário.',
     'Browser returned an invalid or empty source response.': 'O navegador retornou uma resposta de fonte inválida ou vazia.',
     'Model provider returned an invalid or empty completion.': 'O provedor do modelo retornou uma resposta inválida ou vazia.',
+    'The provider returned warnings; some source evidence may be incomplete.': 'O provedor retornou avisos; algumas evidências das fontes podem estar incompletas.',
+    'Transcript exceeds the maximum length.': 'A transcrição excede o tamanho máximo.',
     'The service request failed. Check the server configuration and try again.': 'A solicitação ao serviço falhou. Verifique a configuração do servidor e tente novamente.',
   };
   if (exact[message]) return exact[message];
+  if (message.startsWith('Task queued for a new run.')) return 'Tarefa adicionada à fila para uma nova execução.';
+  if (message === 'Task paused.' || message === 'Task cancelled.') return message === 'Task paused.' ? 'Tarefa pausada.' : 'Tarefa cancelada.';
+  if (message.startsWith('Repeats every ')) return message.replace('Repeats every ', 'Repete a cada ').replace(' minutes after a successful run.', ' minutos após uma execução bem-sucedida.');
+  if (message === 'Repeat schedule removed.') return 'Agendamento de repetição removido.';
+  if (message.startsWith('Worker lease expired.')) return 'O prazo de execução do worker expirou. Revise os efeitos concluídos antes de tentar novamente.';
+  if (message.startsWith('Browser failed (')) return message.replace(/^Browser failed \((\d+)\): /, 'Falha no navegador ($1): ');
+  if (message.startsWith('Model provider returned HTTP ')) return message.replace('Model provider returned HTTP ', 'O provedor do modelo retornou HTTP ').replace(". Check the server's model configuration and quota.", '. Verifique a configuração do modelo no servidor e a cota.');
+  if (message.startsWith('Voice provider returned HTTP ')) return message.replace('Voice provider returned HTTP ', 'O provedor de voz retornou HTTP ').replace('. Check voice configuration and quota.', '. Verifique a configuração de voz e a cota.');
+  if (message.startsWith('The local call stopped, but provider hangup returned HTTP ')) return message.replace('The local call stopped, but provider hangup returned HTTP ', 'A chamada local foi encerrada, mas o provedor respondeu HTTP ');
+  if (message.startsWith('The local call stopped, but provider hangup ')) return message.replace('The local call stopped, but provider hangup ', 'A chamada local foi encerrada, mas o encerramento no provedor ');
   if (message.startsWith('Setup required: ')) return `Configuração necessária: ${message.slice(16)}`;
   if (message.startsWith('Voice setup required: ')) return `Configuração de voz necessária: ${message.slice(22)}`;
   if (message.startsWith('Enter a Space name')) return 'Informe o nome do espaço (até 60 caracteres).';

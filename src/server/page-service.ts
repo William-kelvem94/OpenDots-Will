@@ -23,7 +23,7 @@ async function bounded<T>(operation: Promise<T>): Promise<T> {
           () =>
             reject(
               new Error(
-                'Intelligence request timed out. Retry to recover the same conversation.',
+                'A solicitação ao Intelligence expirou. Tente novamente para recuperar a mesma conversa.',
               ),
             ),
           30000,
@@ -48,7 +48,7 @@ export class PageService {
     const dot = this.workspace.dot(dotId);
     if (!dot || !this.workspace.canAccessSpace(dotId, spaceId))
       throw new PageError(
-        'Choose a specialist in this Space with access enabled.',
+        'Escolha um especialista que tenha acesso habilitado neste espaço.',
         400,
       );
     const key = `${pageId}:${dotId}`;
@@ -62,7 +62,7 @@ export class PageService {
       const candidateId = randomUUID();
       if (!this.workspace.pages.reserveThread(pageId, dotId, candidateId))
         throw new PageError(
-          'This page conversation is being created. Retry shortly.',
+          'A conversa desta página está sendo criada. Tente novamente em instantes.',
           409,
         );
       const threadId = this.workspace.pages.thread(pageId, dotId)!.threadId;
@@ -76,7 +76,7 @@ export class PageService {
           }),
         );
         if (!this.workspace.canAccessSpace(dotId, spaceId))
-          throw new PageError('Space access has been revoked.');
+          throw new PageError('O acesso ao espaço foi revogado.');
         const thread =
           this.workspace.conversations().find((t) => t.id === threadId) ??
           this.workspace.bindThread(threadId, dotId, page.title);

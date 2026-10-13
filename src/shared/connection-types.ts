@@ -44,6 +44,6 @@ export const connectionActionSchema = z
 export const connectionActionTool = {
   name: 'request_connection_action',
   description:
-    'Ask the owner to approve a connected-service action that changes something (sends, creates, updates, deletes). Use only after a connection tool returned approval_required. Pass its approvalId and a one-sentence summary of the effect. Call once, then wait: the result contains the service response if approved.',
+    'Peça ao proprietário que aprove uma ação de serviço conectado que altere algo (enviar, criar, atualizar ou excluir). Use somente depois que uma ferramenta de conexão retornar approval_required. Informe o approvalId e resuma o efeito em uma frase. Chame uma vez e aguarde: o resultado conterá a resposta do serviço se a ação for aprovada.',
   parameters: z.toJSONSchema(connectionActionSchema),
 };

@@ -34,7 +34,7 @@ export async function readResource(
           response.resume();
           reject(
             new Error(
-              'Redirects are blocked for safety. Please provide the final canonical page URL.',
+              'Redirecionamentos são bloqueados por segurança. Informe a URL canônica final da página.',
             ),
           );
           return;

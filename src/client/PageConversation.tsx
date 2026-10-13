@@ -164,7 +164,7 @@ export function PageConversation({
             </select>
             <ChevronDown size={12} />
           </label>
-          <span>{paused ? 'Assistant paused' : 'Uses this saved page'}</span>
+          <span>{paused ? 'Assistente pausado' : 'Usa esta página salva'}</span>
           <button
             type="submit"
             aria-label="Enviar ao assistente da página"

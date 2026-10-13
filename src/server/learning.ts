@@ -14,11 +14,11 @@ export function learningSelector(
 ): Selector {
   return ({ surface, user, agentId, input }) => {
     if (user?.id !== workspace.ownerId)
-      throw new Error('Conversation learning requires the workspace owner.');
+      throw new Error('O aprendizado da conversa exige o proprietário do espaço de trabalho.');
     if (surface === 'channel') {
       if (agentId !== channelDotId)
         throw new Error(
-          'Conversation learning requires the configured Slack Dot.',
+          'O aprendizado da conversa exige o Dot configurado para o Slack.',
         );
       if (
         !workspace

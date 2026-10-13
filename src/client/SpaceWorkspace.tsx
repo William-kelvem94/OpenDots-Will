@@ -148,7 +148,7 @@ export function SpaceWorkspace({
           <h2>{loaded ? 'Página não encontrada' : 'Carregando página…'}</h2>
           {loaded && (
             <button className="document-primary" onClick={() => onPage()}>
-              Back to all pages
+              Voltar para todas as páginas
             </button>
           )}
         </div>

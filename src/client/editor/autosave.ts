@@ -196,10 +196,10 @@ export class PageAutosave {
         this.publish({
           status: conflict ? 'conflict' : 'error',
           error: conflict
-            ? 'This page changed elsewhere. Your draft is safe. Copy it before loading the latest version.'
+            ? 'Esta página foi alterada em outro lugar. Seu rascunho está salvo localmente. Copie-o antes de carregar a versão mais recente.'
             : error instanceof Error
               ? error.message
-              : 'Could not save. Your draft is safe.',
+              : 'Não foi possível salvar. Seu rascunho continua disponível.',
         });
         return false;
       } finally {

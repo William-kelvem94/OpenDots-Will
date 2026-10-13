@@ -10,6 +10,6 @@ export type PageReviewDraft = z.infer<typeof pageReviewSchema>;
 export const pageReviewTool = {
   name: 'review_space_page',
   description:
-    'Present a Markdown draft for human review before saving it into an authorized Space. The user can approve and save, or decline. Do not create the page yourself after this tool: its approved result includes the saved page URL. Call once, then wait for the review result.',
+    'Apresente um rascunho em Markdown para revisão humana antes de salvá-lo em um espaço autorizado. A pessoa pode aprovar e salvar ou recusar. Não crie a página por conta própria após esta ferramenta: o resultado aprovado inclui o link da página salva. Chame uma vez e aguarde o resultado da revisão.',
   parameters: z.toJSONSchema(pageReviewSchema),
 };

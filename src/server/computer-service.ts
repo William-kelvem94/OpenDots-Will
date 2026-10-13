@@ -87,7 +87,7 @@ export class ComputerService {
       });
       if (response.status === 409)
         throw new Error(
-          'Computer service returned HTTP 409: refresh the browser with computer_snapshot before retrying. If the owner has control, wait for them to release it; do not bypass takeover.',
+          'O serviço do computador retornou HTTP 409: atualize o navegador com computer_snapshot antes de tentar novamente. Se o proprietário estiver no controle, aguarde até que ele o libere; não tente contornar a transferência de controle.',
         );
       if (!response.ok)
         throw new Error(`Computer service returned HTTP ${response.status}.`);
@@ -214,7 +214,7 @@ export class ComputerService {
         ...base,
         state: 'unavailable',
         error:
-          'Computer service is unavailable. Check the supervisor configuration and connection.',
+          'O serviço de computador está indisponível. Verifique a configuração e a conexão do supervisor.',
       };
     }
   }

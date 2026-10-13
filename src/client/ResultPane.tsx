@@ -41,13 +41,13 @@ export function ResultPane({
             onClick={() => setResultTab('Brief')}
           >
             <BookOpen size={15} />
-            Brief
+            Resumo
           </button>
           <button
             className={resultTab === 'Computer' ? 'selected' : ''}
             onClick={() => setResultTab('Computer')}
           >
-            <Monitor size={15} /> {computerDot?.name ?? 'Dot'}’s computer
+            <Monitor size={15} /> Computador de {computerDot?.name ?? 'Dot'}
           </button>
         </div>
         <button
@@ -61,7 +61,7 @@ export function ResultPane({
       {resultTab === 'Computer' ? (
         <>
           <label className="computer-dot-picker">
-            Computer for
+            Computador de
             <select
               value={computerDot?.id ?? ''}
               onChange={(event) => setComputerDotId(event.target.value)}
@@ -86,7 +86,7 @@ export function ResultPane({
         <div className="result-content">
           <div className="result-meta">
             <span className="eyebrow">
-              {latest.sample ? 'FICTIONAL SAMPLE BRIEF' : 'RESEARCH BRIEF'}
+              {latest.sample ? 'RESUMO FICTÍCIO DE EXEMPLO' : 'RESUMO DE PESQUISA'}
             </span>
             <button
               className="icon-button"
@@ -95,7 +95,7 @@ export function ResultPane({
                 const blob = new Blob(
                   [
                     latest.text +
-                      '\n\nSources\n' +
+                      '\n\nFontes\n' +
                       latest.sources
                         .map((s) => `${s.title}: ${s.url}`)
                         .join('\n'),
@@ -105,7 +105,7 @@ export function ResultPane({
                 const url = URL.createObjectURL(blob);
                 const anchor = document.createElement('a');
                 anchor.href = url;
-                anchor.download = 'opendots-brief.txt';
+                anchor.download = 'resumo-opendots.txt';
                 anchor.click();
                 URL.revokeObjectURL(url);
               }}
@@ -116,14 +116,14 @@ export function ResultPane({
           {latest.sample && (
             <div className="sample-note">
               Um exemplo do que o Dot pode fazer. As descobertas e fontes abaixo são
-              invented.
+              são fictícias.
             </div>
           )}
           <article className="brief">
             <ReactMarkdown
               components={{
                 img: ({ alt }) => (
-                  <span>{alt ? `[Image: ${alt}]` : '[Image omitted]'}</span>
+                  <span>{alt ? `[Imagem: ${alt}]` : '[Imagem omitida]'}</span>
                 ),
                 a: ({ children, href }) => (
                   <a href={href} target="_blank" rel="noreferrer">
@@ -137,7 +137,7 @@ export function ResultPane({
           </article>
           <section className="sources">
             <h3>
-              Source notes <span>{latest.sources.length}</span>
+              Fontes <span>{latest.sources.length}</span>
             </h3>
             {latest.sources.map((source) =>
               latest.sample ? (

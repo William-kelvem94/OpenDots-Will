@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { ArrowUpRight, FileText, Monitor, Terminal } from 'lucide-react';
 import { z } from 'zod';
-import { api } from './api';
+import { api, translateApiError } from './api';
 
 const screenSchema = z.object({
   base64: z
@@ -81,14 +81,14 @@ export function ComputerToolCard({
     !!error ||
     (typeof data.exitCode === 'number' && data.exitCode !== 0);
   const state = interrupted
-    ? 'Interrupted'
+    ? 'Interrompido'
     : failed
-      ? 'Needs attention'
+      ? 'Precisa de atenção'
       : complete
-        ? 'Finished'
+        ? 'Concluído'
         : running
-          ? 'Working'
-          : 'Interrupted';
+          ? 'Em andamento'
+          : 'Interrompido';
   const detail =
     typeof parameters.url === 'string'
       ? parameters.url
@@ -121,7 +121,7 @@ export function ComputerToolCard({
             setScreenError(
               cause instanceof Error
                 ? cause.message
-                : 'Computer preview unavailable.',
+                : 'A visualização do computador está indisponível.',
             );
           }
         }
@@ -148,7 +148,7 @@ export function ComputerToolCard({
     >
       <header>
         <Icon size={16} aria-hidden="true" />
-        <strong>{labels[action] ?? 'Using computer'}</strong>
+        <strong>{labels[action] ?? 'Usando o computador'}</strong>
         <span className={failed ? 'tool-state failed' : 'tool-state'}>
           {state}
         </span>
@@ -167,8 +167,8 @@ export function ComputerToolCard({
           {detail}
         </div>
       )}
-      {error && <p role="alert">{error}</p>}
-      {interruption && <p role="status">{interruption}</p>}
+      {error && <p role="alert">{translateApiError(error)}</p>}
+      {interruption && <p role="status">{translateApiError(interruption)}</p>}
       {action === 'exec' && complete && typeof data.stdout === 'string' && (
         <pre aria-label="Saída do terminal do computador">
           {data.stdout.slice(0, 4000)}

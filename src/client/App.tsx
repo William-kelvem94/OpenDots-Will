@@ -31,7 +31,7 @@ import type {
   State,
   WorkspaceState,
 } from '../shared/types';
-import { api, ApiError, authHeaders, setToken } from './api';
+import { api, ApiError, authHeaders, setToken, translateApiError } from './api';
 import { trackSetupStep } from './setup-telemetry';
 import {
   applyCaptureResult,
@@ -917,11 +917,11 @@ export function App() {
                       }}
                     />
                     {taskDetail.task.error && (
-                      <p className="chat-error">{taskDetail.task.error}</p>
+                      <p className="chat-error">{translateApiError(taskDetail.task.error)}</p>
                     )}
                     {taskDetail.events.slice(-6).map((event) => (
                       <p className="muted" key={event.id}>
-                        {event.text}
+                        {translateApiError(event.text)}
                       </p>
                     ))}
                     <small>{taskDetail.runs.length} execuções salvas</small>

@@ -31,7 +31,7 @@ app.post('/browse', async (c) => {
     .safeParse(await c.req.json().catch(() => null));
   if (!parsed.success)
     return c.json({ error: 'A valid URL is required.' }, 400);
-  if (busy) return c.json({ error: 'Browser is busy. Retry shortly.' }, 429);
+  if (busy) return c.json({ error: 'O navegador está ocupado. Tente novamente em instantes.' }, 429);
   busy = true;
   let browser: Awaited<ReturnType<typeof chromium.launch>> | undefined;
   const controller = new AbortController();

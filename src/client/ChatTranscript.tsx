@@ -6,6 +6,7 @@ import type { AssistantMessage, Message } from '@ag-ui/core';
 import type { CallReceipt } from '../shared/types';
 import { voiceReceiptMessagePrefix } from '../shared/voice-receipt';
 import { isScheduledTaskMessage } from '../shared/scheduled-message';
+import { translateApiError } from './api';
 // These markers only control rendering; they do not confer trust or permissions.
 export function isInternalVoiceReceipt(message: Message): boolean {
   const metadata = message.metadata;
@@ -29,7 +30,7 @@ function Receipt({ call }: { call: CallReceipt }) {
             ? `${Math.round((call.endedAt - call.startedAt) / 1000)}s · Chamada encerrada`
             : 'Chamada em andamento'}
       </span>
-      {call.error && <small>{call.error}</small>}
+      {call.error && <small>{translateApiError(call.error)}</small>}
     </div>
   );
 }

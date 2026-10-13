@@ -65,13 +65,13 @@ export class WorkspaceStore {
       this.db.exec('ALTER TABLE calls ADD COLUMN anchorMessageId TEXT');
     if (!this.spaces().length) {
       const space = this.createSpace(
-        'Everyday',
-        'A little space for your day.',
+        'Meu espaço',
+        'Um espaço para organizar seu dia.',
       );
       this.createDot(
         space.id,
         'Dot',
-        'Be thoughtful, practical, and concise. Help the user think clearly and follow through.',
+        'Seja atencioso, prático e conciso. Ajude a pessoa a pensar com clareza e colocar seus planos em prática.',
         true,
         true,
       );

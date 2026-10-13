@@ -54,6 +54,6 @@ export async function validateUrl(
     !addresses.length ||
     addresses.some((item) => !isPublicAddress(item.address))
   )
-    throw new Error('Private or special network addresses are blocked.');
+    throw new Error('Endereços de rede privados ou especiais são bloqueados.');
   return { url, ...addresses[0] };
 }

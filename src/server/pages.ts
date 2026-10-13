@@ -71,7 +71,7 @@ export class Pages {
   }
   requireSpace(spaceId: string) {
     if (!this.spaceExists(spaceId))
-      throw new PageError('Space not found.', 404);
+      throw new PageError('Espaço não encontrado.', 404);
   }
   exists(spaceId: string, id: string): boolean {
     this.requireSpace(spaceId);
@@ -90,7 +90,7 @@ export class Pages {
     const row = this.db
       .prepare('SELECT * FROM pages WHERE id=? AND spaceId=?')
       .get(id, spaceId);
-    if (!row) throw new PageError('Page not found in this Space.', 404);
+    if (!row) throw new PageError('Página não encontrada neste espaço.', 404);
     return row as unknown as Page;
   }
   private parent(spaceId: string, parentId: string | null, id?: string) {
@@ -203,7 +203,7 @@ export class Pages {
     const parsed = pagePatch.safeParse(input);
     if (!parsed.success)
       throw new PageError(
-        'A valid page patch and expectedRevision are required.',
+        'É necessário informar uma alteração válida da página e o expectedRevision.',
       );
     const data = parsed.data;
     this.db.exec('BEGIN IMMEDIATE');
@@ -211,7 +211,7 @@ export class Pages {
       const page = this.get(spaceId, id);
       if (page.revision !== data.expectedRevision)
         throw new PageError(
-          'This page changed. Reload the latest revision before saving your draft.',
+          'Esta página foi alterada. Carregue a revisão mais recente antes de salvar o rascunho.',
           409,
         );
       const parent =

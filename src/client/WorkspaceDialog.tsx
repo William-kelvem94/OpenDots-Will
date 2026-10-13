@@ -417,7 +417,7 @@ export function WorkspaceDialog({
                 )}
               </p>
               <p>
-                Slack: {workspace.setup.slack.replaceAll('_', ' ')}. Voice:{' '}
+                Slack: {workspace.setup.slack.replaceAll('_', ' ')}. Voz:{' '}
                 {workspace.setup.voice
                   ? 'configurada'
                   : 'requer VOICE_API_KEY e VOICE_MODEL'}

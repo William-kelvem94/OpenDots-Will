@@ -13,6 +13,8 @@ As gravações mostram os avatares atualizados e a navegação separada para Dot
 
 O README incorpora versões GIF compactas. As versões MP4 estão disponíveis para reprodução e reutilização. São demonstrações gravadas da tela. O vídeo principal omite quatro segundos sem atividade e roda a 1,2×; os demais rodam a 1,25×. Pausas entre trechos também foram removidas. As edições mostram o fluxo de trabalho, não medem a latência do modelo. Nenhuma resposta do assistente ou resultado de ferramenta foi inventado ou substituído. Cada vídeo foi recortado ao redor dos componentes ativos e ampliado conforme indicado em relação à captura original de 1280 pixels de largura; os GIFs usam o mesmo enquadramento. As capturas têm quatro quadros por segundo e servem para mostrar fluxos, não desempenho de animação. Não têm áudio.
 
+As falas entre aspas reproduzem os prompts originais usados nas gravações. Elas foram mantidas no idioma original para corresponder exatamente ao conteúdo dos vídeos.
+
 ## Vídeo principal: do chat ao espaço
 
 [Chat to Space](chat-to-space.mp4) follows one live natural-language request:
