@@ -266,7 +266,7 @@ export class DotAgent extends AbstractAgent {
             defineTool({
               name: 'read_public_page',
               description:
-                'Extract source evidence from a public HTTP(S) URL with Parallel. No authenticated browsing or write actions.',
+                'Extraia evidências relevantes de uma URL HTTP(S) pública usando o Parallel. Não permite navegação autenticada nem ações de escrita.',
               parameters: z.object({ url: z.string().url().max(2048) }),
               execute: ({ url }) =>
                 capture('Leia a página em busca de evidências relevantes para a fonte.', [url]),

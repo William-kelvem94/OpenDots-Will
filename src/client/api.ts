@@ -85,6 +85,28 @@ export function translateApiError(message: string): string {
     'Dot not found.': 'Dot não encontrado.',
     'Call not found.': 'Chamada não encontrada.',
     'Conversation does not belong to this Dot and owner.': 'A conversa não pertence a este Dot e proprietário.',
+    'Connection tool not found.': 'Ferramenta de conexão não encontrada.',
+    'Connection tool is not available to this Dot.': 'A ferramenta de conexão não está disponível para este Dot.',
+    'Space access must include a valid default destination.': 'O acesso ao espaço precisa incluir um destino padrão válido.',
+    'Only standard web ports are allowed.': 'Somente portas web padrão são permitidas.',
+    'Local addresses are blocked.': 'Endereços locais estão bloqueados.',
+    'Voice provider returned invalid SDP.': 'O provedor de voz retornou um SDP inválido.',
+    'Call connection was cancelled.': 'A conexão da chamada foi cancelada.',
+    'Call session expired.': 'A sessão da chamada expirou.',
+    'The current compute turn returned no assistant response.': 'A execução atual não retornou uma resposta do assistente.',
+    'The selected Dot is unavailable in the runtime.': 'O Dot selecionado não está disponível no runtime.',
+    'Intelligence runtime returned an invalid response.': 'O runtime do Intelligence retornou uma resposta inválida.',
+    'Computer service returned an empty response.': 'O serviço de computador retornou uma resposta vazia.',
+    'Computer response exceeded its size limit.': 'A resposta do computador excedeu o limite de tamanho.',
+    'Computer identity mismatch.': 'A identidade do computador não corresponde.',
+    'Computer endpoint is not bound to this Dot.': 'O endpoint do computador não está vinculado a este Dot.',
+    'Human controls are owner-only.': 'Os controles manuais estão disponíveis apenas ao proprietário.',
+    'Connection tool is not available to this Dot.': 'A ferramenta de conexão não está disponível para este Dot.',
+    'Space access has been revoked or was not granted.': 'O acesso ao espaço foi revogado ou não foi concedido.',
+    'Research permission is disabled.': 'A permissão de pesquisa está desativada.',
+    'A valid URL is required.': 'É necessário informar uma URL válida.',
+    'Browser is busy. Retry shortly.': 'O navegador está ocupado. Tente novamente em instantes.',
+    'Private or special network addresses are blocked.': 'Endereços de rede privados ou especiais são bloqueados.',
     'Browser returned an invalid or empty source response.': 'O navegador retornou uma resposta de fonte inválida ou vazia.',
     'Model provider returned an invalid or empty completion.': 'O provedor do modelo retornou uma resposta inválida ou vazia.',
     'The provider returned warnings; some source evidence may be incomplete.': 'O provedor retornou avisos; algumas evidências das fontes podem estar incompletas.',
@@ -93,6 +115,11 @@ export function translateApiError(message: string): string {
   };
   if (exact[message]) return exact[message];
   if (message.startsWith('Task queued for a new run.')) return 'Tarefa adicionada à fila para uma nova execução.';
+  if (message.startsWith('Computer service returned HTTP ')) return message.replace('Computer service returned HTTP ', 'O serviço de computador retornou HTTP ');
+  if (message.startsWith('Intelligence runtime returned HTTP ')) return message.replace('Intelligence runtime returned HTTP ', 'O runtime do Intelligence retornou HTTP ');
+  if (message.startsWith('Slack notice failed: ')) return message.replace('Slack notice failed: ', 'Falha ao enviar aviso pelo Slack: ');
+  if (message.startsWith('Slack subscription lookup failed: ')) return message.replace('Slack subscription lookup failed: ', 'Falha ao consultar a assinatura do Slack: ');
+  if (message.startsWith('This turn reached the ')) return message.replace(/^This turn reached the (\d+) second time limit and was stopped\. Try a smaller request\.$/, 'Esta execução atingiu o limite de $1 segundos e foi interrompida. Tente uma solicitação menor.');
   if (message === 'Task paused.' || message === 'Task cancelled.') return message === 'Task paused.' ? 'Tarefa pausada.' : 'Tarefa cancelada.';
   if (message.startsWith('Repeats every ')) return message.replace('Repeats every ', 'Repete a cada ').replace(' minutes after a successful run.', ' minutos após uma execução bem-sucedida.');
   if (message === 'Repeat schedule removed.') return 'Agendamento de repetição removido.';
