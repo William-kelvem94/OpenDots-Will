@@ -52,7 +52,7 @@ export function ResultPane({
         </div>
         <button
           className="icon-button"
-          aria-label="Close result panel"
+              aria-label="Fechar painel de resultados"
           onClick={() => onClose()}
         >
           <X size={16} />
@@ -65,7 +65,7 @@ export function ResultPane({
             <select
               value={computerDot?.id ?? ''}
               onChange={(event) => setComputerDotId(event.target.value)}
-              aria-label="Select Dot computer"
+              aria-label="Selecionar computador do Dot"
             >
               {dots.map((dot) => (
                 <option key={dot.id} value={dot.id}>
@@ -78,7 +78,7 @@ export function ResultPane({
             <ComputerPanel key={computerDot.id} dot={computerDot} />
           ) : (
             <p className="computer-panel">
-              Create a Dot to give it a computer.
+              Crie um Dot para atribuir um computador a ele.
             </p>
           )}
         </>
@@ -90,7 +90,7 @@ export function ResultPane({
             </span>
             <button
               className="icon-button"
-              aria-label="Download brief"
+              aria-label="Baixar resumo"
               onClick={() => {
                 const blob = new Blob(
                   [
@@ -115,7 +115,7 @@ export function ResultPane({
           </div>
           {latest.sample && (
             <div className="sample-note">
-              An example of what Dot can do. The findings and sources below are
+              Um exemplo do que o Dot pode fazer. As descobertas e fontes abaixo são
               invented.
             </div>
           )}
@@ -148,7 +148,7 @@ export function ResultPane({
                   <div>
                     <strong>{source.title}</strong>
                     <p>{source.excerpt}</p>
-                    <small>Fictional source · not a live link</small>
+                    <small>Fonte fictícia · não é um link ativo</small>
                   </div>
                 </div>
               ) : (
@@ -180,11 +180,11 @@ export function ResultPane({
             name={dots.find((dot) => dot.id === defaultDotId)?.name}
             state={dotState}
           />
-          <h3>A little space for your findings.</h3>
+          <h3>Um espaço para suas descobertas.</h3>
           <p>
             {status === 'failed'
-              ? 'Resolve the error and retry to create a research brief.'
-              : 'Your brief and sources will appear here after a successful run.'}
+              ? 'Resolva o erro e tente novamente para criar um resumo de pesquisa.'
+              : 'Seu resumo e as fontes aparecerão aqui quando a execução for concluída.'}
           </p>
         </div>
       )}

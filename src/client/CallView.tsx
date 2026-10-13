@@ -33,28 +33,28 @@ export function CallView({
   const duration = `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
   const label =
     voice.status === 'connecting'
-      ? 'Connecting…'
+      ? 'Conectando…'
       : voice.status === 'ending'
-        ? 'Saving call…'
+        ? 'Salvando chamada…'
         : voice.muted
-          ? 'Microphone muted'
+          ? 'Microfone sem áudio'
           : voice.phase === 'speaking'
-            ? `${dot.name} is speaking`
+            ? `${dot.name} está falando`
             : voice.phase === 'thinking'
-              ? 'Working on it…'
-              : 'Listening';
+              ? 'Em andamento…'
+              : 'Ouvindo';
   return (
     <section
       className={`call-view ${minimized ? 'minimized' : ''}`}
-      aria-label={`Voice call with ${dot.name}`}
+      aria-label={`Chamada de voz com ${dot.name}`}
     >
       <div className="call-heading">
         <span>
-          <span className="call-live-dot" /> Voice call
+          <span className="call-live-dot" /> Chamada de voz
         </span>
         <button
           className="call-minimize"
-          aria-label={minimized ? 'Expand call view' : 'Minimize call view'}
+          aria-label={minimized ? 'Expandir chamada' : 'Minimizar chamada'}
           onClick={() => setMinimized(!minimized)}
         >
           {minimized ? <Maximize2 size={18} /> : <ChevronDown size={20} />}
@@ -63,7 +63,7 @@ export function CallView({
       <div className={`call-persona ${voice.phase}`}>
         <Mascot identity={dot.id} name={dot.name} />
         <h2>{dot.name}</h2>
-        <span className="call-timer" aria-label="Call duration">
+        <span className="call-timer" aria-label="Duração da chamada">
           {duration}
         </span>
         <p role="status">{label}</p>
@@ -72,13 +72,13 @@ export function CallView({
         <div className="call-caption" aria-live="polite">
           {voice.userCaption && (
             <p className="call-user-caption">
-              <small>You</small>
+              <small>Você</small>
               {voice.userCaption}
             </p>
           )}
           <p>
             <small>{dot.name}</small>
-            {voice.caption || 'Speak naturally. Your Dot is here with you.'}
+            {voice.caption || 'Converse naturalmente. Seu Dot está aqui com você.'}
           </p>
         </div>
       )}
@@ -90,38 +90,38 @@ export function CallView({
       <div className="call-controls">
         <button
           aria-label={
-            voice.speakerMuted ? 'Enable call audio' : 'Mute call audio'
+            voice.speakerMuted ? 'Ativar áudio da chamada' : 'Silenciar áudio da chamada'
           }
           aria-pressed={voice.speakerMuted}
           onClick={voice.toggleSpeaker}
           disabled={voice.status !== 'active'}
         >
           <span>{voice.speakerMuted ? <VolumeX /> : <Volume2 />}</span>
-          <small>Speaker</small>
+          <small>Áudio</small>
         </button>
         <button
           className="call-end"
-          aria-label="End voice call"
+          aria-label="Encerrar chamada de voz"
           onClick={() => void voice.end()}
           disabled={voice.status === 'ending'}
         >
           <span>
             <PhoneOff />
           </span>
-          <small>End</small>
+          <small>Encerrar</small>
         </button>
         <button
-          aria-label={voice.muted ? 'Unmute microphone' : 'Mute microphone'}
+          aria-label={voice.muted ? 'Ativar microfone' : 'Silenciar microfone'}
           aria-pressed={voice.muted}
           onClick={voice.toggleMute}
           disabled={voice.status !== 'active'}
         >
           <span>{voice.muted ? <MicOff /> : <Mic />}</span>
-          <small>{voice.muted ? 'Unmute' : 'Mute'}</small>
+          <small>{voice.muted ? 'Ativar' : 'Silenciar'}</small>
         </button>
       </div>
       {!minimized && (
-        <p className="call-footer">Text and voice share this conversation</p>
+        <p className="call-footer">Texto e voz compartilham esta conversa</p>
       )}
     </section>
   );

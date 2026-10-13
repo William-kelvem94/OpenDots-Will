@@ -1,30 +1,30 @@
-# Connections
+# Conexões
 
-Connections give a Dot tools from remote [MCP](https://modelcontextprotocol.io) servers: email, calendars, issue trackers, notes, or your own services. Each connection belongs to one Dot.
+As conexões oferecem a um Dot ferramentas de servidores [MCP](https://modelcontextprotocol.io) remotos: e-mail, calendários, rastreadores de issues, notas ou serviços próprios. Cada conexão pertence a um Dot.
 
-## Add a connection
+## Adicionar uma conexão
 
-1. Open a Dot's settings (**Edit specialist**).
-2. Under **Connections**, enter a name, the server's Streamable HTTP endpoint (for example `https://example.com/mcp`), and an optional bearer token.
-3. Select **Connect**. OpenDots lists the server's tools and saves them.
+1. Abra as configurações de um Dot (**Editar especialista**).
+2. Em **Conexões**, informe um nome, o endpoint Streamable HTTP do servidor (por exemplo, `https://example.com/mcp`) e, se desejar, um token bearer.
+3. Selecione **Conectar**. O OpenDots lista e salva as ferramentas do servidor.
 
-Use **Refresh** after the server adds or changes tools. Your choices for existing tools are kept.
+Use **Atualizar** quando o servidor adicionar ou alterar ferramentas. Suas escolhas para as ferramentas existentes serão mantidas.
 
-## Approvals
+## Aprovações
 
-Every tool starts enabled. A tool the server marks as read-only (`readOnlyHint`) runs on its own. Every other tool starts with **Ask first** on.
+Todas as ferramentas começam ativadas. Uma ferramenta que o servidor identifica como somente leitura (`readOnlyHint`) é executada diretamente. Todas as demais começam com **Perguntar antes** ativado.
 
-When a Dot calls an **Ask first** tool, the tool does not run. The server stores the exact connection, tool and arguments, and the Dot shows an approval card in chat with a summary and those stored arguments. The action runs only when you select **Approve & run**, through an owner-only server route. That route runs the stored request, never arguments sent with the approval, and only if the conversation's Dot still has that exact tool enabled. Requests expire after an hour. Each approval runs at most once. Reopening the conversation shows the saved result, or keeps checking while the action is still running. A saved result is only ever shown for the approval that produced it.
+Quando um Dot chama uma ferramenta com **Perguntar antes**, ela não é executada. O servidor armazena a conexão, a ferramenta e os argumentos exatos; o Dot exibe um cartão de aprovação no chat com um resumo e esses argumentos. A ação só é executada quando você seleciona **Aprovar e executar**, por uma rota do servidor exclusiva do proprietário. Essa rota usa a solicitação armazenada, nunca os argumentos enviados junto com a aprovação, e só prossegue se o Dot da conversa ainda tiver aquela ferramenta ativada. As solicitações expiram após uma hora. Cada aprovação é executada no máximo uma vez. Ao reabrir a conversa, o resultado salvo é exibido ou a verificação continua enquanto a ação estiver em andamento. Um resultado salvo só é exibido para a aprovação que o gerou.
 
-The read-only hint comes from the server, so it is only a hint. Turn on **Ask first** for any tool you do not fully trust, and turn off tools a Dot does not need.
+A indicação de somente leitura vem do servidor e não é uma garantia. Ative **Perguntar antes** para qualquer ferramenta em que não confie plenamente e desative as ferramentas de que o Dot não precisa.
 
-Approval cards appear only in the web app. Through Slack or in scheduled runs, an **Ask first** tool tells the Dot to ask you to continue in the web app.
+Os cartões de aprovação aparecem apenas no app Web. Pelo Slack ou em tarefas agendadas, uma ferramenta com **Perguntar antes** instrui o Dot a pedir que você continue no app Web.
 
-Changing a Dot's connections or tool settings stops that Dot's active turn.
+Alterar as conexões ou configurações de ferramentas de um Dot interrompe a interação em andamento.
 
-## Security notes
+## Notas de segurança
 
-- Tokens are stored in the server's SQLite database and are never sent to the browser. Protect `DATABASE_PATH` the way you protect `.env`.
-- Tool results are passed to the model as untrusted data.
-- Endpoints must use `http` or `https` and cannot contain credentials in the URL. Local addresses are allowed, so you can run MCP servers on the same machine. Only add servers you trust.
-- OAuth-only servers are not supported yet. Use a server that accepts a bearer token, or put a token-authenticated proxy in front of it.
+- Os tokens são armazenados no banco SQLite do servidor e nunca são enviados ao navegador. Proteja `DATABASE_PATH` como você protege `.env`.
+- Os resultados das ferramentas são enviados ao modelo como dados não confiáveis.
+- Os endpoints devem usar `http` ou `https` e não podem incluir credenciais na URL. Endereços locais são permitidos; você pode executar servidores MCP na mesma máquina. Adicione apenas servidores confiáveis.
+- Servidores que aceitam somente OAuth ainda não são compatíveis. Use um servidor que aceite token bearer ou coloque à frente dele um proxy autenticado por token.

@@ -1,9 +1,9 @@
-# OpenBot computer services
+# Serviços de computador do OpenBot
 
-OpenDots builds the computer service and supervisor from CopilotKit/OpenBot revision `b6932d31a8d6e7896c15139dfc27a6c6911deb27` (MIT). Their source is downloaded by BuildKit from the pinned Git context; it is not resolved from a moving branch or a `latest` image.
+O OpenDots compila o serviço de computador e o supervisor a partir da revisão `b6932d31a8d6e7896c15139dfc27a6c6911deb27` do CopilotKit/OpenBot (MIT). O BuildKit baixa o código-fonte pelo contexto Git fixado; ele não é resolvido a partir de uma branch variável nem de uma imagem `latest`.
 
-The computer service is unchanged. The supervisor keeps its narrow ensure/stop/reset/list implementation and resource ownership checks. Its image omits the unused SPIRE CLI, and applies one fail-closed patch to child environment construction: each computer receives `HMAC-SHA256(COMPUTER_TOKEN, "opendots-computer:" + dotId)` instead of the master token. The application uses the same derivation. No supervisor token, model key, or master computer token is forwarded to a computer.
+O serviço de computador permanece inalterado. O supervisor mantém sua implementação restrita de verificação, parada, redefinição e listagem, além das verificações de propriedade dos recursos. A imagem omite a CLI SPIRE não utilizada e aplica uma alteração que falha de forma segura ao construir o ambiente dos processos filhos: cada computador recebe `HMAC-SHA256(COMPUTER_TOKEN, "opendots-computer:" + dotId)` em vez do token mestre. A aplicação usa a mesma derivação. Nenhum token do supervisor, chave de modelo ou token mestre de computador é encaminhado a um computador.
 
-If the pinned upstream line changes, the patch refuses to build. Upgrades require reviewing the API contracts, ownership/volume behavior, and this patch together. On the next ensure request after a master-token change, the pinned supervisor replaces owned containers with the new credential while retaining their volumes. Do not delete profile or workspace volumes during normal updates.
+Se a versão upstream fixada mudar, a alteração impede a compilação. Para atualizar, revise em conjunto os contratos da API, o comportamento de propriedade/volumes e esta alteração. Na próxima solicitação de verificação após a mudança do token mestre, o supervisor fixado substitui os contêineres gerenciados pela nova credencial e mantém os volumes. Não exclua os volumes de perfil ou espaço de trabalho durante atualizações normais.
 
-See [computer setup](../../docs/COMPUTERS.md). OpenBot's MIT license is included in [LICENSE.openbot](LICENSE.openbot).
+Consulte [configuração do computador](../../docs/COMPUTERS.md). A licença MIT do OpenBot está incluída em [LICENSE.openbot](LICENSE.openbot).

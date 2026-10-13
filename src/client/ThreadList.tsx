@@ -29,14 +29,14 @@ export function ThreadList({
         <button
           className="icon-button"
           onClick={onNew}
-          aria-label="New conversation"
+          aria-label="Nova conversa"
         >
           <Plus size={14} />
         </button>
       </div>
       {threads.error && (
         <p className="sidebar-error">
-          Conversation sync unavailable. Check your runtime connection.
+          A sincronização de conversas está indisponível. Verifique a conexão com o runtime.
         </p>
       )}
       {local.map((thread) => {
@@ -56,7 +56,7 @@ export function ThreadList({
         );
       })}
       {!local.length && (
-        <p className="sidebar-empty">Your first conversation will live here.</p>
+        <p className="sidebar-empty">Sua primeira conversa aparecerá aqui.</p>
       )}
       {threads.hasMoreThreads && (
         <button

@@ -57,7 +57,7 @@ export function ConnectionActionCard({
           setApprovalError(
             cause instanceof Error
               ? cause.message
-              : 'Could not load this request.',
+              : 'Não foi possível carregar esta solicitação.',
           ),
       );
     return () => {
@@ -81,7 +81,7 @@ export function ConnectionActionCard({
             setError(
               cause instanceof Error
                 ? cause.message
-                : 'Could not check this action.',
+                : 'Não foi possível verificar esta ação.',
             );
         });
     setError('');
@@ -106,7 +106,7 @@ export function ConnectionActionCard({
         await respond({
           approved: false,
           message:
-            'The owner declined this action. Do not perform it or try another way.',
+            'O proprietário recusou esta ação. Não a execute nem tente realizá-la de outra forma.',
         });
         return;
       }
@@ -122,7 +122,7 @@ export function ConnectionActionCard({
       await respond({ approved: true, ...value });
     } catch (cause) {
       setError(
-        cause instanceof Error ? cause.message : 'Could not run this action.',
+        cause instanceof Error ? cause.message : 'Não foi possível executar esta ação.',
       );
     } finally {
       pending.current = false;
@@ -133,34 +133,34 @@ export function ConnectionActionCard({
   return (
     <section
       className="page-review-card connection-action-card"
-      aria-label="Approve connected-service action"
+      aria-label="Aprovar ação do serviço conectado"
     >
       <header>
         <PlugZap size={17} />
         <strong>
           {approval
             ? `${approval.connection} · ${approval.title}`
-            : 'Connected service'}
+            : 'Serviço conectado'}
         </strong>
         <span>
           {approved
             ? outcome?.isError
-              ? 'Failed'
-              : 'Approved'
+              ? 'Falhou'
+              : 'Aprovada'
             : declined
-              ? 'Declined'
+              ? 'Recusada'
               : running
-                ? 'Running'
+                ? 'Em execução'
                 : finished
-                  ? 'Ended'
+                  ? 'Encerrada'
                   : !ready
-                    ? 'Checking'
-                    : 'Needs your approval'}
+                    ? 'Verificando'
+                    : 'Aguardando sua aprovação'}
         </span>
       </header>
       <div className="page-review-body">
         <h3>
-          {action.success ? action.data.summary : 'Preparing the action…'}
+          {action.success ? action.data.summary : 'Preparando ação…'}
         </h3>
         {entries.length > 0 && (
           <dl className="connection-action-args">
@@ -174,16 +174,16 @@ export function ConnectionActionCard({
         )}
         {mismatch && (
           <div className="connection-action-result failed">
-            <strong>Cannot run</strong>
+            <strong>Não é possível executar</strong>
             <pre>
-              This card’s saved result belongs to a different approval request.
-              Nothing was run for this one.
+              O resultado salvo neste cartão pertence a outra solicitação de aprovação.
+              Esta ação não foi executada.
             </pre>
           </div>
         )}
         {approvalError && !outcome && (
           <div className="connection-action-result failed">
-            <strong>Cannot run</strong>
+            <strong>Não é possível executar</strong>
             <pre>{approvalError}</pre>
           </div>
         )}
@@ -192,7 +192,7 @@ export function ConnectionActionCard({
             className={`connection-action-result ${outcome.isError ? 'failed' : ''}`}
           >
             <strong>
-              {outcome.isError ? 'Service error' : 'Service response'}
+              {outcome.isError ? 'Erro do serviço' : 'Resposta do serviço'}
             </strong>
             <pre>{outcome.text}</pre>
           </div>
@@ -202,7 +202,7 @@ export function ConnectionActionCard({
       <footer>
         {!ready && error && (
           <button type="button" onClick={() => setAttempt((n) => n + 1)}>
-            Retry
+            Tentar novamente
           </button>
         )}
         {!finished && respond && ready && !running && !mismatch && (
@@ -215,10 +215,10 @@ export function ConnectionActionCard({
             >
               <Check size={15} />
               {busy
-                ? 'Running…'
+                ? 'Executando…'
                 : outcome
-                  ? 'Continue conversation'
-                  : 'Approve & run'}
+                  ? 'Continuar conversa'
+                  : 'Aprovar e executar'}
             </button>
             {!outcome && (
               <button
@@ -226,17 +226,17 @@ export function ConnectionActionCard({
                 disabled={busy}
                 onClick={() => void decide(false)}
               >
-                Decline
+                Recusar
               </button>
             )}
           </>
         )}
         <small>
           {running
-            ? 'This action is still running on the server.'
+            ? 'Esta ação ainda está em execução no servidor.'
             : approved || declined || finished
               ? ''
-              : 'Nothing runs until you approve. These are the exact arguments.'}
+              : 'Nada será executado até você aprovar. Estes são os argumentos exatos.'}
         </small>
       </footer>
     </section>

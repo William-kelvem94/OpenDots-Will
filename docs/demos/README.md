@@ -1,62 +1,62 @@
-# Recorded walkthroughs
+# Demonstrações gravadas
 
-Recorded from the local OpenDots app on September 29, 2026. The recordings use a dedicated `opendots` Intelligence project, a live `gpt-5.4-mini` model, and example content in a separate Launch studio Space. No customer data or credentials are shown.
+Gravadas no app local OpenDots em 29 de setembro de 2026. As gravações usam um projeto Intelligence dedicado chamado `opendots`, um modelo `gpt-5.4-mini` ao vivo e conteúdo de exemplo em um espaço separado chamado Launch studio. Nenhum dado de cliente ou credencial é exibido.
 
-| Recording                                    | Flow                                                                                | Duration   | Framing |
+| Gravação                                     | Fluxo                                                                               | Duração    | Enquadramento |
 | -------------------------------------------- | ----------------------------------------------------------------------------------- | ---------- | ------- |
-| [Chat to Space](chat-to-space.mp4)           | Ask Scout to browse, review the proposed draft, approve it, and open the saved page | 23 seconds | 150%    |
-| [Specialist chat](specialist-chat.mp4)       | Continue launch planning with Scout and receive a live follow-up response           | 13 seconds | 150%    |
-| [Spaces and page chat](spaces-page-chat.mp4) | Open a Space and page, ask about the saved brief, then continue under Scout         | 19 seconds | 135%    |
-| [Computer chat](computer-chat.mp4)           | Browse a website, save notes, and verify the file through chat                      | 34 seconds | 150%    |
+| [Chat com páginas](chat-to-space.mp4)                    | Peça ao Scout para navegar, revisar um rascunho, aprová-lo e abrir a página salva | 23 segundos | 150%    |
+| [Chat com especialista](specialist-chat.mp4)              | Continue o planejamento de lançamento com Scout e receba uma resposta ao vivo    | 13 segundos | 150%    |
+| [Espaços e chat sobre páginas](spaces-page-chat.mp4)      | Abra um espaço e uma página, pergunte sobre o resumo e continue com Scout         | 19 segundos | 135%    |
+| [Chat com o computador](computer-chat.mp4)                | Navegue por um site, salve anotações e confira o arquivo pelo chat                | 34 segundos | 150%    |
 
-The recordings show the updated plush avatars and separate Dots, Spaces, and recent-chat navigation. Space-access settings preserve existing grants. The computer demo uses Scout with browser, file, and shell access enabled for its own container.
+As gravações mostram os avatares atualizados e a navegação separada para Dots, espaços e conversas recentes. As configurações de acesso aos espaços preservam permissões existentes. A demonstração do computador usa o Scout, com acesso ao navegador, arquivos e terminal habilitado no próprio contêiner.
 
-The README embeds compact GIF versions. MP4 versions are included for playback and reuse. These are screen-capture walkthroughs. The hero omits four seconds of idle footage and plays at 1.2×; the other clips play at 1.25×. Pauses between capture segments are also omitted. These edits show the workflow, not a model-latency benchmark. No assistant responses or tool results are fabricated or replaced. Each video is cropped around its active components at the listed magnification relative to the original 1280-pixel-wide capture; GIFs use the same framing. The captures are sampled at four frames per second, so they are intended to show workflows rather than animation performance. They have no audio.
+O README incorpora versões GIF compactas. As versões MP4 estão disponíveis para reprodução e reutilização. São demonstrações gravadas da tela. O vídeo principal omite quatro segundos sem atividade e roda a 1,2×; os demais rodam a 1,25×. Pausas entre trechos também foram removidas. As edições mostram o fluxo de trabalho, não medem a latência do modelo. Nenhuma resposta do assistente ou resultado de ferramenta foi inventado ou substituído. Cada vídeo foi recortado ao redor dos componentes ativos e ampliado conforme indicado em relação à captura original de 1280 pixels de largura; os GIFs usam o mesmo enquadramento. As capturas têm quatro quadros por segundo e servem para mostrar fluxos, não desempenho de animação. Não têm áudio.
 
-## Chat-to-Space hero
+## Vídeo principal: do chat ao espaço
 
 [Chat to Space](chat-to-space.mp4) follows one live natural-language request:
 
 > Visit https://www.copilotkit.ai in your computer. Draft “Launch in three steps”: one goal and three milestones, under 80 words. Show it for my approval before saving in Launch studio.
 
-Scout opens the website in its existing OpenBot computer. CopilotKit `useRenderTool` displays the browser inline, and `useHumanInTheLoop` presents the draft with **Approve & save** and **Decline**. The recording shows approval, the saved-page receipt, and the finished Space page. The page also survived a reload after recording.
+Scout abre o site no computador OpenBot existente. O CopilotKit `useRenderTool` exibe o navegador na conversa, e `useHumanInTheLoop` apresenta o rascunho com as opções **Aprovar e salvar** e **Recusar**. A gravação mostra a aprovação, a confirmação da página salva e a página concluída no espaço. A página também continuou disponível após recarregar o app.
 
-Approval uses an owner-authenticated route, checks the Dot's current Space access, and deduplicates saves by thread and tool call. Reconnecting recovers an existing approval before offering a new decision. Slack does not receive this web-only review tool.
+A aprovação usa uma rota autenticada pelo proprietário, verifica o acesso atual do Dot ao espaço e evita duplicar salvamentos pela Thread e chamada da ferramenta. Ao reconectar, recupera uma aprovação existente antes de solicitar uma nova decisão. Essa ferramenta de revisão exclusiva da Web não fica disponível no Slack.
 
-## Chat-driven computer demo
+## Demonstração do computador pelo chat
 
-[Computer chat](computer-chat.mp4) (34 seconds) uses the existing CopilotKit `useAgent` / `useCopilotKit` chat and server tools. The OpenBot computer is provisioned before recording. Only these two natural-language messages drive the workflow:
+[Computer chat](computer-chat.mp4) (34 segundos) usa o chat e as ferramentas de servidor existentes do CopilotKit (`useAgent` / `useCopilotKit`). O computador OpenBot é provisionado antes da gravação. Apenas estas duas mensagens em linguagem natural conduzem o fluxo:
 
 1. “Open https://www.copilotkit.ai in your computer and tell me what it offers in two short bullets.”
 2. “Save those notes as copilotkit-notes.md on your computer. Use your terminal to verify the file, then tell me where it is and how many words it contains.”
 
-Scout navigates, summarizes the page, writes the file, and executes a terminal check. Its real reply reports `/workspace/copilotkit-notes.md` and 41 words; an independent container command confirmed both. No manual browser navigation, file editing, or terminal command entry appears in this recording. CopilotKit `useRenderTool` and `CopilotChatToolCallsView` render the computer directly inside the conversation: a live browser card, a file receipt, and terminal output. The side panel stays closed. Tool results and responses are not scripted.
+Scout navega, resume a página, grava o arquivo e executa uma verificação no terminal. A resposta real informa `/workspace/copilotkit-notes.md` e 41 palavras; um comando independente no contêiner confirmou esses dados. Esta gravação não mostra navegação manual, edição de arquivos nem comandos digitados no terminal. O CopilotKit `useRenderTool` e `CopilotChatToolCallsView` exibem o computador diretamente na conversa: um cartão do navegador ao vivo, a confirmação do arquivo e a saída do terminal. O painel lateral permanece fechado. Resultados de ferramentas e respostas não são roteirizados.
 
-The final recording was captured after correcting host-to-supervisor networking and documenting snapshot recovery following a computer restart. Earlier failed takes are not part of the clip. Between the two chat requests, recording pauses were omitted; the revised clip accelerates the captured footage to 1.25× without changing its sequence.
+A gravação final foi feita após corrigir a rede entre o host e o supervisor e documentar a recuperação de snapshots após reiniciar o computador. Tentativas anteriores com falha não aparecem no vídeo. As pausas de gravação entre as duas solicitações no chat foram removidas; o clipe revisado acelera a captura para 1,25× sem alterar a sequência.
 
-## What was verified
+## O que foi verificado
 
-- The provided model credential authenticated successfully.
-- A dedicated hosted Intelligence project and project-scoped runtime key were provisioned through the CopilotKit CLI.
-- Specialist chat returned a live model response.
-- The page assistant received the saved document context and returned relevant milestones.
-- The launch brief remained saved after a browser reload.
-- The page conversation and its model response reloaded from Intelligence after refreshing the browser.
+- A credencial fornecida para o modelo autenticou com sucesso.
+- Um projeto Intelligence hospedado e uma chave de runtime com escopo de projeto foram provisionados pela CLI do CopilotKit.
+- O chat do especialista recebeu uma resposta real do modelo.
+- O assistente da página recebeu o contexto do documento salvo e retornou marcos relevantes.
+- O resumo de lançamento continuou salvo após recarregar o navegador.
+- A conversa da página e a resposta do modelo foram carregadas novamente do Intelligence após atualizar o navegador.
 
-- Live OpenBot computer provisioning, browser navigation, file creation, and shell execution succeeded.
-- A saved workspace file retained identical contents across a stop/start (checked separately from the recording).
-- Browser work resumed after restart using a fresh snapshot.
+- O provisionamento ao vivo do computador OpenBot, a navegação no navegador, a criação do arquivo e a execução no terminal foram concluídos com sucesso.
+- Um arquivo salvo no espaço de trabalho manteve o mesmo conteúdo após parar e iniciar o serviço (verificado separadamente da gravação).
+- O trabalho no navegador foi retomado após a reinicialização usando um novo snapshot.
 
-Slack is not demonstrated. Spoken compute delegation and full interruption behavior still need dedicated live checks.
+O Slack não aparece na demonstração. A delegação de execução por voz e o comportamento completo de interrupção ainda precisam de verificações ao vivo específicas.
 
-## Voice call UI test
+## Teste da interface de chamada de voz
 
-[Voice call](voice-call.mp4) (15 seconds) is a silent screen capture of a real browser WebRTC call using `gpt-realtime-2.1`. It shows connection, elapsed time, separate user and Dot captions, microphone and speaker mute, minimize/expand, hang-up, and the saved receipt. The microphone was muted during the controls sequence; the visible spoken input and replies came from the live session. Capture uses two screenshots per second; waiting time is trimmed and playback is accelerated to 1.25×. The clip is not a latency benchmark and does not contain recorded audio.
+[Chamada de voz](voice-call.mp4) (15 segundos) é uma captura sem áudio de uma chamada WebRTC real no navegador usando `gpt-realtime-2.1`. Ela mostra a conexão, o tempo decorrido, legendas separadas para usuário e Dot, controles para silenciar microfone e áudio, minimizar/ampliar, encerrar e o registro salvo. O microfone foi silenciado durante a sequência dos controles; a fala e as respostas visíveis vieram da sessão real. A captura usa duas imagens por segundo; o tempo de espera foi removido e a reprodução foi acelerada para 1,25×. O clipe não mede latência nem contém áudio gravado.
 
-Live checks on September 30, 2026 confirmed two-way microphone/audio in an earlier mic check, live captions, working controls, clean provider hang-up, and a saved transcript with no call error. The final receipt and assistant summary survived a reload in the same Intelligence thread. A separate real server turn verified the Node-compatible Intelligence agent used for receipt sync and compute; spoken `ask_compute` delegation was not demonstrated in this clip.
+Verificações ao vivo em 30 de setembro de 2026 confirmaram áudio bidirecional em um teste anterior do microfone, legendas ao vivo, controles funcionais, encerramento correto no provedor e transcrição salva sem erro na chamada. A confirmação final e o resumo do assistente continuaram disponíveis após recarregar a mesma Thread Intelligence. Uma interação real separada no servidor verificou o agente Intelligence compatível com Node usado para sincronizar confirmações e execução; a delegação por voz `ask_compute` não aparece neste clipe.
 
-Calls stop microphone transmission and pause output immediately when ending, then release the WebRTC peer after the server hang-up request. Captions and callbacks from an ended session cannot update a later call. Keys stay server-side and are not included in recordings.
+Ao encerrar uma chamada, o envio do microfone para imediatamente e a reprodução é pausada; depois, a conexão WebRTC é liberada após a solicitação de encerramento ao servidor. Legendas e callbacks de uma sessão encerrada não podem atualizar chamadas futuras. As chaves permanecem no servidor e não aparecem nas gravações.
 
-## Re-recording
+## Gravar novamente
 
-Use a separate example Space and specialist. Verify the model and Intelligence connection before recording. Keep Settings, environment files, credential pages, and unrelated windows out of the capture. Record the actual app, inspect every segment, and update the verification date and scope when replacing the assets. Never replace failed or missing responses with scripted output.
+Use um espaço de exemplo e um especialista separados. Verifique a conexão do modelo e do Intelligence antes de gravar. Não inclua Configurações, arquivos de ambiente, páginas de credenciais nem janelas sem relação na captura. Grave o app real, revise cada trecho e atualize a data e o escopo das verificações ao substituir os arquivos. Nunca substitua respostas ausentes ou com falha por conteúdo roteirizado.

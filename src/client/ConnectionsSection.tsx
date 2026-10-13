@@ -24,7 +24,7 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
           setError(
             cause instanceof Error
               ? cause.message
-              : 'Could not load connections.',
+              : 'Não foi possível carregar as conexões.',
           ),
       );
     return () => {
@@ -66,11 +66,11 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
   };
   return (
     <fieldset className="space-access-fields connections-fields">
-      <legend>Connections</legend>
+      <legend>Conexões</legend>
       <p className="muted">
-        Give this Dot tools from MCP servers. Read-only tools run on their own;
-        anything else asks you in chat before it runs. Tokens stay on the
-        server.
+        Disponibilize ferramentas de servidores MCP para este Dot. Ferramentas
+        somente de leitura são executadas diretamente; as demais pedem sua
+        aprovação no chat antes de executar. Os tokens ficam no servidor.
       </p>
       {connections?.map((connection) => (
         <div className="connection" key={connection.id}>
@@ -80,13 +80,13 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
               <strong>{connection.name}</strong>
               <small>
                 {new URL(connection.url).host}
-                {connection.hasToken ? ' · token saved' : ''}
+                {connection.hasToken ? ' · token salvo' : ''}
               </small>
             </span>
             <button
               type="button"
               className="icon-button"
-              aria-label={`Refresh ${connection.name} tools`}
+              aria-label={`Atualizar ferramentas de ${connection.name}`}
               disabled={!!busy}
               onClick={async () => {
                 const next = await run(connection.id, () =>
@@ -104,10 +104,10 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
             <button
               type="button"
               className="icon-button"
-              aria-label={`Remove ${connection.name}`}
+              aria-label={`Remover ${connection.name}`}
               disabled={!!busy}
               onClick={async () => {
-                if (!window.confirm(`Remove ${connection.name} from this Dot?`))
+                if (!window.confirm(`Remover ${connection.name} deste Dot?`))
                   return;
                 const done = await run(connection.id, () =>
                   api(`/connections/${connection.id}`, 'DELETE'),
@@ -127,7 +127,7 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
             </p>
           )}
           {!connection.tools.length && (
-            <p className="muted">This server offers no tools.</p>
+            <p className="muted">Este servidor não oferece ferramentas.</p>
           )}
           <ul className="connection-tools">
             {connection.tools.map((tool) => {
@@ -158,7 +158,7 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
                     <span>
                       <strong>
                         {tool.title}
-                        {tool.readOnly && <em>read-only</em>}
+                        {tool.readOnly && <em>somente leitura</em>}
                       </strong>
                       {tool.description && <small>{tool.description}</small>}
                     </span>
@@ -172,7 +172,7 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
                         void patch({ requiresApproval: event.target.checked })
                       }
                     />
-                    Ask first
+                    Perguntar antes
                   </label>
                 </li>
               );
@@ -182,18 +182,18 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
       ))}
       <div className="connection-add">
         <label className="field-label" htmlFor="connection-name">
-          Add an MCP server
+          Adicionar um servidor MCP
         </label>
         <input
           id="connection-name"
-          placeholder="Name, e.g. GitHub"
+          placeholder="Nome, por exemplo, GitHub"
           maxLength={40}
           value={name}
           onKeyDown={stayInSection}
           onChange={(event) => setName(event.target.value)}
         />
         <input
-          aria-label="MCP server URL"
+          aria-label="URL do servidor MCP"
           placeholder="https://example.com/mcp"
           type="url"
           value={url}
@@ -201,8 +201,8 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
           onChange={(event) => setUrl(event.target.value)}
         />
         <input
-          aria-label="Bearer token (optional)"
-          placeholder="Bearer token (optional)"
+          aria-label="Token bearer (opcional)"
+          placeholder="Token bearer (opcional)"
           type="password"
           autoComplete="off"
           value={token}
@@ -215,7 +215,7 @@ export function ConnectionsSection({ dotId }: { dotId: string }) {
           disabled={!!busy || !name.trim() || !url.trim()}
           onClick={() => void add()}
         >
-          {busy === 'add' ? 'Connecting…' : 'Connect'}
+          {busy === 'add' ? 'Conectando…' : 'Conectar'}
         </button>
       </div>
       {error && (

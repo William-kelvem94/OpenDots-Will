@@ -1,22 +1,22 @@
-# Security
+# Segurança
 
-OpenDots is an application template under development, not a hosted service. The local prototype is single-owner; Space membership, Slack identity mapping, and voice delegation require additional enforcement before connected multi-user use. It is not a security-audited autonomous agent.
+O OpenDots é um modelo de aplicação em desenvolvimento, não um serviço hospedado. O protótipo local tem um único proprietário; o acesso a espaços, o mapeamento de identidades do Slack e a delegação por voz precisam de controles adicionais antes do uso conectado por várias pessoas. Este agente autônomo não passou por uma auditoria de segurança.
 
-## Intended boundary
+## Limites previstos
 
-- Run local development on loopback.
-- Protect remote deployments with authentication and HTTPS.
-- Keep the browser service isolated from the application host and private networks. Do not expose its port publicly.
-- Keep Intelligence, model, speech, and browser credentials on the server. Never commit `.env` files or local databases.
-- Treat page text, uploaded content, and model output as untrusted data, not authorization to change permissions.
-- Authorize every Space, Dot, and thread operation on the server. Map Slack actors explicitly; never treat a display name or client-supplied user ID as proof of identity.
-- Voice sessions must use scoped, short-lived credentials and route compute actions through the same permissions as text and Slack.
-- Research browsing is read-only. Page tools can edit local documents in the executing Dot’s Space; those writes use revision checks. Adding external writes requires a separate authorization and review design.
+- Execute o desenvolvimento local em loopback.
+- Proteja implantações remotas com autenticação e HTTPS.
+- Mantenha o serviço de navegador isolado do host da aplicação e das redes privadas. Não exponha sua porta publicamente.
+- Mantenha no servidor as credenciais do Intelligence, do modelo, de voz e do navegador. Nunca inclua arquivos `.env` nem bancos de dados locais em commits.
+- Trate textos de páginas, conteúdo enviado e respostas do modelo como dados não confiáveis, não como autorização para alterar permissões.
+- Autorize no servidor cada operação em espaços, Dots e Threads. Associe explicitamente as identidades do Slack; nunca considere um nome de exibição ou ID de usuário enviado pelo cliente como prova de identidade.
+- Sessões de voz devem usar credenciais temporárias e com escopo limitado, e encaminhar ações de execução pelas mesmas permissões usadas em texto e Slack.
+- A navegação de pesquisa é somente leitura. Ferramentas de páginas podem editar documentos locais no espaço do Dot que as executa; essas gravações usam verificações de revisão. Gravações externas exigem um fluxo separado de autorização e revisão.
 
-Recurring work requires an available server. A sample run is not evidence that a live provider or deployment is safe or configured correctly. Review results before using them for important decisions.
+Tarefas recorrentes exigem que o servidor esteja disponível. Uma execução de exemplo não comprova que um provedor ou implantação real seja seguro ou esteja configurado corretamente. Revise os resultados antes de usá-los em decisões importantes.
 
-## Reporting
+## Relatos
 
-Use the repository's private vulnerability reporting feature when available. If it is unavailable, open an issue asking for a private reporting channel without including exploit details, credentials, private URLs, or personal data.
+Use o recurso privado de relato de vulnerabilidades do repositório, quando disponível. Caso contrário, abra uma issue pedindo um canal privado de comunicação, sem incluir detalhes do exploit, credenciais, URLs privadas ou dados pessoais.
 
-Do not post sensitive reproduction data in a public issue. This project does not currently promise a response-time SLA or offer a bug bounty.
+Não publique dados sensíveis para reprodução em uma issue pública. No momento, este projeto não garante um prazo de resposta nem oferece recompensa por bugs.

@@ -1,68 +1,73 @@
-# Intelligence signup and OpenDots usage tracking
+# Rastreamento de cadastros no Intelligence e uso do OpenDots
 
-OpenDots uses the CopilotKit SDK's existing telemetry transport. There is no
-separate PostHog SDK or PostHog key to configure in this application.
+O OpenDots usa o transporte de telemetria já existente no SDK do CopilotKit. Não
+é necessário configurar um SDK ou uma chave PostHog separados nesta aplicação.
 
-## Configure the server
+## Configurar o servidor
 
-Run these commands from the OpenDots root:
+Execute estes comandos na pasta raiz do OpenDots:
 
 ```sh
 npx copilotkit@latest login
 npx copilotkit@latest project select
 ```
 
-Keep both generated values in the server environment:
+Mantenha os dois valores gerados no ambiente do servidor:
 
-| Variable                   | Purpose                                                                                    |
+| Variável                   | Finalidade                                                                                 |
 | -------------------------- | ------------------------------------------------------------------------------------------ |
-| `CPK_INTELLIGENCE_API_KEY` | Server-only project key for persistent conversations.                                      |
-| `CPK_TELEMETRY_ID`         | CLI-issued project binding that the telemetry sink can resolve to an Intelligence account. |
+| `CPK_INTELLIGENCE_API_KEY` | Chave de projeto exclusiva do servidor para conversas persistentes.                        |
+| `CPK_TELEMETRY_ID`         | Vínculo de projeto emitido pela CLI e associável a uma conta Intelligence pelo coletor.     |
 
-Deploy the values for the selected project together. Do not generate your own
-telemetry ID, reuse another project's ID, or put either value in client-side
-variables. An API key alone does not give runtime telemetry a resolvable identity.
-If the CLI reports an identity provisioning failure, resolve that failure and
-run project selection again before claiming account attribution works.
+Implante juntos os valores do projeto selecionado. Não gere seu próprio ID de
+telemetria, não reutilize o ID de outro projeto nem coloque qualquer um dos
+valores em variáveis do cliente. A chave da API, sozinha, não fornece uma
+identidade que a telemetria do runtime possa resolver. Se a CLI informar uma
+falha ao provisionar a identidade, resolva-a e selecione o projeto novamente
+antes de considerar a atribuição à conta funcional.
 
-Docker Compose forwards `CPK_TELEMETRY_ID` from `.env` into the app container.
-For other deployment environments, copy the CLI-generated identity and its
-matching project key into the server environment, then restart the server.
-Keep the identity server-side. Leave `OWNER_ID` and conversation/thread IDs
-unchanged; they scope app data and are not the signup account identity.
+O Docker Compose encaminha `CPK_TELEMETRY_ID` de `.env` para o contêiner do app.
+Em outros ambientes, copie a identidade gerada pela CLI e a chave de projeto
+correspondente para o ambiente do servidor e reinicie-o. Mantenha a identidade
+no servidor. Não altere `OWNER_ID` nem os IDs de conversas/Threads; eles definem
+o escopo dos dados do app e não representam a identidade da conta cadastrada.
 
-The SDK sends existing runtime events to
-`https://telemetry.copilotkit.ai/ingest`. OpenDots adds
-`accessibility_title: "OpenDots"`. The current SDK defaults to full sampling
-(`1`), and Docker Compose uses the same default. An explicit
-`COPILOTKIT_TELEMETRY_SAMPLE_RATE` override is respected.
+O SDK envia os eventos de runtime existentes para
+`https://telemetry.copilotkit.ai/ingest`. O OpenDots adiciona
+`accessibility_title: "OpenDots"`. A versão atual do SDK usa amostragem integral
+(`1`) por padrão, assim como o Docker Compose. Uma substituição explícita por
+`COPILOTKIT_TELEMETRY_SAMPLE_RATE` é respeitada.
 
-Remove old deployment settings that disable telemetry if tracking is desired.
-To opt out, set either `COPILOTKIT_TELEMETRY_DISABLED=true` or `DO_NOT_TRACK=1`
-and restart the API. Both variables accept `true` or `1`. The `npm test` command disables telemetry for ordinary automated fixtures.
+Remova configurações antigas da implantação que desativam a telemetria se quiser
+mantê-la ativa. Para desativá-la, defina `COPILOTKIT_TELEMETRY_DISABLED=true` ou
+`DO_NOT_TRACK=1` e reinicie a API. Ambas as variáveis aceitam `true` ou `1`.
+O comando `npm test` desativa a telemetria nas simulações automatizadas comuns.
 
-## What the events measure
+## O que os eventos medem
 
-- `intelligence_signup`: an Intelligence account created in Clerk, emitted by
-  the existing backend sync with the Clerk user ID as its PostHog `distinct_id`.
-- `oss.runtime.instance_created`: the OpenDots runtime handler was created.
-- `oss.runtime.copilot_request_created`: a request reached the runtime; this is
-  usage evidence, not proof of a successful model answer.
+- `intelligence_signup`: uma conta Intelligence criada no Clerk, emitida pela
+  sincronização existente do backend, usando o ID de usuário do Clerk como
+  `distinct_id` no PostHog.
+- `oss.runtime.instance_created`: o handler de runtime do OpenDots foi criado.
+- `oss.runtime.copilot_request_created`: uma solicitação chegou ao runtime; isso
+  comprova uso, mas não uma resposta bem-sucedida do modelo.
 
-The sink enriches runtime events with `telemetry_id`, and with `clerk_user_id`
-when that identity resolves. Runtime and signup events can have different
-PostHog `distinct_id` values: join the runtime `clerk_user_id` property to the
-signup `distinct_id` rather than assuming a standard person funnel joins them.
+O sink enriquece eventos de runtime com `telemetry_id` e, quando a identidade é
+resolvida, com `clerk_user_id`. Eventos de runtime e cadastro podem ter valores
+`distinct_id` diferentes no PostHog: associe a propriedade `clerk_user_id` do
+runtime ao `distinct_id` do cadastro, sem presumir que um funil padrão de pessoas
+os associe automaticamente.
 
-This connects completed signups to OpenDots usage. It does not prove OpenDots
-was the acquisition source: the account might predate OpenDots. Measuring
-acquisition requires carrying a source through the Intelligence signup flow.
-OpenDots does not emit a duplicate signup event on startup, login or key entry.
+Isso associa cadastros concluídos ao uso do OpenDots. Não comprova que o OpenDots
+foi a origem da aquisição: a conta pode ter sido criada antes. Para medir a
+origem, seria necessário transportar essa informação durante o fluxo de cadastro
+do Intelligence. O OpenDots não emite um evento de cadastro duplicado ao iniciar,
+entrar ou informar uma chave.
 
-## Validate in PostHog
+## Validar no PostHog
 
-After deploying, restart the API and make one chat request. In
-[PostHog project 26816](https://eu.posthog.com/project/26816), run:
+Após implantar, reinicie a API e envie uma solicitação pelo chat. No
+[projeto PostHog 26816](https://eu.posthog.com/project/26816), execute:
 
 ```sql
 SELECT event, timestamp, distinct_id,
@@ -80,83 +85,94 @@ ORDER BY timestamp DESC
 LIMIT 20
 ```
 
-Confirm the tag, the expected telemetry identity and the resolved Clerk subject.
-Then find that subject's `intelligence_signup` event. To count accounts signed
-up in the last 30 days that also used OpenDots in that period:
+Confirme a identificação do app, a identidade de telemetria esperada e o usuário
+Clerk resolvido. Depois, localize o evento `intelligence_signup` desse usuário.
+Para contar as contas cadastradas nos últimos 30 dias que também usaram o
+OpenDots nesse período:
 
-Run the saved [signup-account query](telemetry/opendots-signups.hogql.sql).
-It joins requests to signup accounts by Clerk ID. If a request lacks Clerk
-enrichment, it uses the latest resolved startup/runtime event with the same
-telemetry identity in the reporting window. This avoids assuming every request
-has a resolved account, and avoids joining unrelated installations by IP or
-PostHog person ID. The [daily usage query](telemetry/opendots-usage.hogql.sql)
-uses the same identity lookup. Both queries exclude marked validation events
-from requests and identity lookups.
+Execute a [consulta salva de contas cadastradas](telemetry/opendots-signups.hogql.sql).
+Ela associa solicitações às contas cadastradas pelo ID do Clerk. Se uma
+solicitação não tiver enriquecimento Clerk, usa o evento de inicialização/runtime
+resolvido mais recente com a mesma identidade de telemetria no período do
+relatório. Assim, não se presume que toda solicitação tenha uma conta resolvida
+nem se associam instalações diferentes por IP ou ID de pessoa do PostHog. A
+[consulta diária de uso](telemetry/opendots-usage.hogql.sql) usa a mesma busca de
+identidade. Ambas excluem eventos de validação identificados das solicitações e
+das buscas por identidade.
 
-An HTTP `202` from ingest alone does not prove PostHog delivery. If the event
-or identity enrichment is missing, check the deployed server environment and
-the `TelemetrySinkIngest` / `TelemetrySinkFanout` CloudWatch logs. The canonical
-reporting surface is [dashboard 664553](https://eu.posthog.com/project/26816/dashboard/664553).
+Uma resposta HTTP `202` da ingestão não comprova, por si só, que o evento chegou
+ao PostHog. Se o evento ou o enriquecimento de identidade estiver ausente,
+verifique o ambiente do servidor implantado e os logs do CloudWatch
+`TelemetrySinkIngest` / `TelemetrySinkFanout`. O painel oficial é o
+[dashboard 664553](https://eu.posthog.com/project/26816/dashboard/664553).
 
-## Local verification
+## Verificação local
 
-`npm test` disables production telemetry for ordinary fixtures. The telemetry
-tests start fresh processes, intercept SDK fetch calls before importing it,
-and check the OpenDots tag, CLI-issued identity header, full sampling, explicit
-sampling override, both opt-outs and absence of the project key in the payload.
-These checks prove the local SDK contract; production delivery and identity
-resolution require the PostHog checks above. Internal `@copilotkit.ai` accounts
-are excluded from signup sync, so validate a new external signup separately.
+`npm test` desativa a telemetria de produção nas simulações comuns. Os testes de
+telemetria iniciam processos novos, interceptam chamadas fetch do SDK antes de
+importá-lo e verificam a identificação do OpenDots, o cabeçalho de identidade da
+CLI, a amostragem integral, a substituição explícita da taxa de amostragem, as
+duas formas de desativação e a ausência da chave do projeto no payload. Essas
+verificações comprovam o contrato local do SDK; o envio em produção e a resolução
+de identidade exigem as verificações do PostHog acima. Contas internas
+`@copilotkit.ai` são excluídas da sincronização de cadastros; valide separadamente
+um novo cadastro externo.
 
-Ask the reporting owner to add the OpenDots filter and Clerk-ID join to
-its reporting rule. The query counts signup accounts associated with usage,
-not signups caused by the template. Local Intelligence evaluation also requires
-CopilotKit sign-in, but a runtime event by itself does not establish a new signup.
+Peça à pessoa responsável pelos relatórios para adicionar o filtro OpenDots e a
+associação pelo ID do Clerk à regra de relatório. A consulta conta contas
+cadastradas associadas ao uso, não cadastros causados pelo modelo. A avaliação
+local do Intelligence também exige login no CopilotKit, mas um evento de runtime,
+por si só, não indica um novo cadastro.
 
-## Reporting queries and validation evidence
+## Consultas de relatório e evidências de validação
 
-The saved [signup-account query](telemetry/opendots-signups.hogql.sql) and
-[daily usage query](telemetry/opendots-usage.hogql.sql) exclude marked validation
-probes. The [setup-event query](telemetry/opendots-setup.hogql.sql) and
-[installation conversion query](telemetry/opendots-setup-conversion.hogql.sql)
-report the [browser setup flow](SETUP-TELEMETRY.md). All four queries executed
-successfully against the production PostHog query API. Use these as the OpenDots
-reporting rule in PostHog. Request counts are
-attempts, including requests rejected by the SDK; they are not successful answers.
+As consultas salvas de [contas cadastradas](telemetry/opendots-signups.hogql.sql)
+e [uso diário](telemetry/opendots-usage.hogql.sql) excluem testes de validação
+identificados. A [consulta de eventos de configuração](telemetry/opendots-setup.hogql.sql)
+e a [consulta de conversão por instalação](telemetry/opendots-setup-conversion.hogql.sql)
+relatam o [fluxo de configuração no navegador](SETUP-TELEMETRY.md). As quatro
+consultas foram executadas com sucesso na API de consultas PostHog de produção.
+Use-as como regra de relatório do OpenDots no PostHog. A contagem de solicitações
+representa tentativas, incluindo as rejeitadas pelo SDK; não representa respostas
+bem-sucedidas.
 
-On October 5, 2026, a live SDK probe using the CLI-selected `opendots` project
-sent `oss.runtime.instance_created` and `oss.runtime.copilot_request_created`
-to the production sink. Both returned HTTP `202` with marker
-`opendots-validation-be790d6a-ff3e-4ce9-be30-5e3741ffc707`. The request was stopped
-at SDK body validation before an agent ran. It made no model call and created
-no signup or customer conversation.
+Em 5 de outubro de 2026, um teste ao vivo do SDK usando o projeto `opendots`
+selecionado pela CLI enviou `oss.runtime.instance_created` e
+`oss.runtime.copilot_request_created` ao sink de produção. Ambos retornaram HTTP
+`202` com o marcador `opendots-validation-be790d6a-ff3e-4ce9-be30-5e3741ffc707`.
+A solicitação foi interrompida na validação do corpo pelo SDK, antes de executar
+um agente. Não fez chamada ao modelo nem criou cadastro ou conversa de cliente.
 
-Authenticated PostHog queries returned one event of each type, both with a
-telemetry identity and resolved Clerk user ID. Both events resolved to a staff
-account (`@copilotkit.ai`), which signup sync excludes; the matching signup
-count was therefore zero. This proves live SDK delivery and account resolution,
-not a new external signup. The saved reporting queries both executed successfully:
-zero signup accounts and no non-validation daily usage rows at validation time.
+Consultas autenticadas ao PostHog retornaram um evento de cada tipo, ambos com
+identidade de telemetria e ID de usuário Clerk resolvido. Os dois eventos foram
+associados a uma conta da equipe (`@copilotkit.ai`), excluída da sincronização de
+cadastros; por isso, a contagem correspondente foi zero. Isso comprova o envio
+ao vivo pelo SDK e a resolução da conta, não um novo cadastro externo. As
+consultas salvas foram executadas com sucesso: zero contas cadastradas e nenhuma
+linha de uso diário sem marcador de validação naquele momento.
 
-The validation key is permitted to execute HogQL but cannot read dashboard
-664553 (`403`, missing `dashboard:read`). The queries are prepared and executed,
-but were not saved as dashboard charts. Saving the reporting rule requires
-dashboard and insight read/write scopes, or the reporting owner's intervention.
+A chave de validação pode executar HogQL, mas não ler o dashboard 664553 (`403`,
+falta `dashboard:read`). As consultas foram preparadas e executadas, mas não
+salvas como gráficos do dashboard. Para salvar a regra de relatório, são
+necessários escopos de leitura/gravação de dashboards e insights ou a intervenção
+da pessoa responsável pelo relatório.
 
-A marked `oss.runtime.setup_step_viewed` from the production setup emitter also
-reached PostHog with its installation UUID:
-`opendots-setup-validation-1ddf8b49-4d6a-434e-b345-4982d48cd9a5`. Setup events
-do not receive Clerk account enrichment from the shared fanout; only the two
-exact runtime event types above do. Join setup and runtime by their shared
-`installation_id` to associate setup with account-resolved usage. The runtime
-continues to use the CLI identity as its transport identity. Activation and
-abandonment edge cases are validated locally, not fabricated in production.
+O emissor de configuração de produção também enviou ao PostHog um evento
+`oss.runtime.setup_step_viewed` identificado pelo UUID de instalação:
+`opendots-setup-validation-1ddf8b49-4d6a-434e-b345-4982d48cd9a5`. Eventos de
+configuração não recebem enriquecimento de conta Clerk pela distribuição
+compartilhada; apenas os dois tipos exatos de evento de runtime acima recebem.
+Associe configuração e runtime pelo `installation_id` compartilhado para
+relacionar a configuração ao uso associado a uma conta. O runtime continua
+usando a identidade da CLI como identidade de transporte. Casos extremos de
+ativação e abandono são validados localmente, não simulados em produção.
 
-The combined updated probe
-`opendots-validation-70c8067c-aa54-48c5-8d37-725baca262cf` delivered a startup,
-request, and setup-view event with one shared installation UUID. Startup
-resolved to the Clerk account; the request retained telemetry identity but
-lacked Clerk enrichment. This is why reporting uses the same-identity startup
-lookup. A missing request Clerk ID alone is not evidence that the template
-lost its identity. The shared sink's dependency resolution is separate from
-this template's transport wiring.
+O teste combinado atualizado
+`opendots-validation-70c8067c-aa54-48c5-8d37-725baca262cf` enviou eventos de
+inicialização, solicitação e visualização de configuração com um UUID de
+instalação compartilhado. A inicialização foi associada à conta Clerk; a
+solicitação manteve a identidade de telemetria, mas não recebeu enriquecimento
+Clerk. Por isso, os relatórios consultam a inicialização com a mesma identidade.
+A ausência do ID Clerk em uma solicitação não indica, por si só, que o modelo
+perdeu sua identidade. A resolução de dependências do sink compartilhado é
+independente da integração de transporte deste modelo.

@@ -75,7 +75,7 @@ export function slackHandlers(options: {
     if (options.paused()) {
       await notice(
         thread,
-        'OpenDots is paused. Resume it in the app before asking me to continue.',
+        'O OpenDots está pausado. Retome-o no app antes de pedir para eu continuar.',
       );
       return;
     }
@@ -85,7 +85,7 @@ export function slackHandlers(options: {
       const runError = safeFailure(error);
       try {
         await thread.post(
-          'I couldn’t complete that request. Please check OpenDots and send a new message when you’re ready to try again.',
+          'Não consegui concluir essa solicitação. Confira o OpenDots e envie uma nova mensagem quando quiser tentar novamente.',
         );
       } catch (postError) {
         const replyError = safeFailure(postError);

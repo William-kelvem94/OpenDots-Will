@@ -86,7 +86,7 @@ export function Chat({
       .catch(() => {
         if (active)
           setContextError(
-            'Conversation context could not load. Retry before sending your message.',
+            'Não foi possível carregar o contexto da conversa. Tente novamente antes de enviar uma mensagem.',
           );
       });
     return () => {
@@ -125,7 +125,7 @@ export function Chat({
       .catch((e) => {
         if (active)
           setError(
-            e instanceof Error ? e.message : 'Conversation could not connect.',
+            e instanceof Error ? e.message : 'Não foi possível conectar à conversa.',
           );
       });
     return () => {
@@ -148,14 +148,14 @@ export function Chat({
       const result = await copilotkit.runAgent({ agent });
       if (!result.newMessages.some((message) => message.role === 'assistant'))
         throw new Error(
-          'The current turn returned no response. Check the runtime connection and retry.',
+          'Esta rodada não retornou uma resposta. Verifique a conexão do runtime e tente novamente.',
         );
       onSaved();
     } catch (e) {
       setError(
         e instanceof Error
           ? e.message
-          : 'The turn failed. Your conversation remains saved.',
+          : 'A rodada falhou. Sua conversa continua salva.',
       );
     } finally {
       setRunning(false);
@@ -254,21 +254,21 @@ export function Chat({
           <strong>{dot.name}</strong>
           <span>
             {paused
-              ? 'Paused'
+              ? 'Pausado'
               : running
-                ? 'Thinking…'
+                ? 'Pensando…'
                 : loaded && contextReady
-                  ? 'Here with you'
-                  : 'Connecting to your conversation…'}
+                  ? 'Estou aqui com você'
+                  : 'Conectando à conversa…'}
           </span>
         </div>
         <div className="chat-persona-actions">
           <button
             className="icon-button"
-            aria-label="Save conversation as page"
+            aria-label="Salvar conversa como página"
             disabled={running}
             onClick={async () => {
-              const title = window.prompt('Page title', thread.title);
+              const title = window.prompt('Título da página', thread.title);
               if (!title) return;
               try {
                 const page = await api<Page>(
@@ -281,7 +281,7 @@ export function Chat({
                 setError(
                   e instanceof Error
                     ? e.message
-                    : 'Could not save conversation.',
+                    : 'Não foi possível salvar a conversa.',
                 );
               }
             }}
@@ -290,7 +290,7 @@ export function Chat({
           </button>
           <button
             className="icon-button"
-            aria-label="Schedule a task in this conversation"
+            aria-label="Agendar uma tarefa nesta conversa"
             onClick={onSchedule}
           >
             <Clock3 size={18} />
@@ -298,12 +298,12 @@ export function Chat({
           <button
             className={`icon-button ${voice.status === 'active' ? 'on-call' : ''}`}
             aria-label={
-              voice.status === 'idle' ? 'Start voice call' : 'End voice call'
+              voice.status === 'idle' ? 'Iniciar chamada de voz' : 'Encerrar chamada de voz'
             }
             title={
               voiceReady
-                ? 'Talk with your Dot'
-                : 'Voice setup requires VOICE_API_KEY and VOICE_MODEL'
+                ? 'Converse por voz com seu Dot'
+                : 'A configuração de voz exige VOICE_API_KEY e VOICE_MODEL'
             }
             disabled={!voiceReady || paused || !loaded || !contextReady}
             onClick={() =>
@@ -320,7 +320,7 @@ export function Chat({
       </header>
       {pageContext && (
         <div className="page-chat-context">
-          Working on{' '}
+          Trabalhando em{' '}
           <a href={`/#/spaces/${pageContext.spaceId}/pages/${pageContext.id}`}>
             {pageContext.title}
           </a>
@@ -329,11 +329,11 @@ export function Chat({
       <div className="chat-transcript">
         {!visible.length && (
           <div className="chat-welcome">
-            <span className="eyebrow">A LITTLE SPACE TO THINK</span>
-            <h1>What’s on your mind?</h1>
+            <span className="eyebrow">UM ESPAÇO PARA PENSAR</span>
+            <h1>O que você tem em mente?</h1>
             <p>{dot.instructions}</p>
             <p className="muted">
-              Your conversation stays with this Dot, across text and calls.
+              Sua conversa fica com este Dot, tanto por texto quanto por voz.
             </p>
           </div>
         )}
@@ -361,7 +361,7 @@ export function Chat({
         <div className="chat-error" role="alert">
           {contextError}
           <button onClick={() => setContextAttempt((value) => value + 1)}>
-            Retry context
+            Tentar carregar o contexto novamente
           </button>
         </div>
       )}
@@ -378,7 +378,7 @@ export function Chat({
                   .catch((e) => setError(e.message));
               }}
             >
-              Reconnect
+              Reconectar
             </button>
           )}
         </div>
@@ -392,14 +392,14 @@ export function Chat({
         className="chat-composer"
         onSubmit={(e) => {
           e.preventDefault();
-          void send(`${source ? `From ${source}:\n\n` : ''}${draft}`);
+          void send(`${source ? `Da referência ${source}:\n\n` : ''}${draft}`);
         }}
       >
         {sourceOpen && (
           <div className="source-input">
             <Link2 size={15} />
             <input
-              aria-label="Source page URL"
+              aria-label="URL da página de referência"
               type="url"
               value={source}
               onChange={(e) => setSource(e.target.value)}
@@ -408,7 +408,7 @@ export function Chat({
             <button
               type="button"
               className="icon-button"
-              aria-label="Remove source"
+              aria-label="Remover referência"
               onClick={() => {
                 setSourceOpen(false);
                 setSource('');
@@ -422,14 +422,14 @@ export function Chat({
           <button
             type="button"
             className="icon-button"
-            aria-label="Add source page link"
+            aria-label="Adicionar link de referência"
             onClick={() => setSourceOpen(!sourceOpen)}
           >
             <Link2 size={19} />
           </button>
           <textarea
-            aria-label="Message your Dot"
-            placeholder={`Message ${dot.name}…`}
+            aria-label="Enviar mensagem ao seu Dot"
+            placeholder={`Mensagem para ${dot.name}…`}
             rows={1}
             value={draft}
             maxLength={4000}
@@ -445,7 +445,7 @@ export function Chat({
             <button
               type="button"
               className="send-button"
-              aria-label="Stop response"
+              aria-label="Interromper resposta"
               onClick={() => copilotkit.stopAgent({ agent })}
             >
               <Square size={16} />
@@ -453,7 +453,7 @@ export function Chat({
           ) : (
             <button
               className="send-button"
-              aria-label="Send message"
+              aria-label="Enviar mensagem"
               disabled={!draft.trim() || !loaded || !contextReady || paused}
             >
               <ArrowUp size={19} />
@@ -462,8 +462,8 @@ export function Chat({
         </div>
         <div className="chat-compose-note">
           {voiceReady
-            ? 'Text and voice, one conversation.'
-            : 'Text is ready. Voice needs separate server configuration.'}
+            ? 'Texto e voz, na mesma conversa.'
+            : 'O texto está pronto. A voz exige configuração adicional no servidor.'}
         </div>
       </form>
     </div>

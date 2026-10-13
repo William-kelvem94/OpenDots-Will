@@ -96,16 +96,16 @@ export function WorkspaceDialog({
   }, []);
   const title =
     dialog.type === 'space'
-      ? 'A space for something.'
+      ? 'Um espaço para suas ideias.'
       : dialog.type === 'dot'
         ? dialog.dot
-          ? 'Make this Dot yours.'
-          : 'Meet your next specialist.'
+          ? 'Personalize este Dot.'
+          : 'Conheça seu próximo especialista.'
         : dialog.type === 'settings'
-          ? 'Your workspace, your rules.'
+          ? 'Seu espaço de trabalho, suas regras.'
           : dialog.type === 'memory'
-            ? 'Something to remember.'
-            : 'Let your Dot keep time.';
+            ? 'Algo para lembrar.'
+            : 'Agende uma tarefa para seu Dot.';
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <section
@@ -118,12 +118,12 @@ export function WorkspaceDialog({
       >
         <button
           className="modal-close icon-button"
-          aria-label="Close dialog"
+          aria-label="Fechar janela"
           onClick={onClose}
         >
           <X size={18} />
         </button>
-        <span className="eyebrow">OPENDOTS TEMPLATE</span>
+        <span className="eyebrow">MODELO OPENDOTS</span>
         <h2 id="dialog-title">{title}</h2>
         <form
           onSubmit={async (e) => {
@@ -173,14 +173,14 @@ export function WorkspaceDialog({
             }
             if (await mutate(path, method, body)) onClose();
             else
-              setError('Could not save. Review the workspace error and retry.');
+              setError('Não foi possível salvar. Confira o erro no espaço de trabalho e tente novamente.');
             setBusy(false);
           }}
         >
           {(dialog.type === 'space' || dialog.type === 'dot') && (
             <>
               <label className="field-label" htmlFor="entity-name">
-                Name
+                Nome
               </label>
               <input
                 id="entity-name"
@@ -195,12 +195,12 @@ export function WorkspaceDialog({
             <>
               <label className="field-label" htmlFor="entity-text">
                 {dialog.type === 'dot'
-                  ? 'Role instructions'
+                  ? 'Instruções do papel'
                   : dialog.type === 'space'
-                    ? 'What belongs here?'
+                    ? 'O que deve ficar aqui?'
                     : dialog.type === 'memory'
-                      ? 'Preference or context'
-                      : 'Task to revisit'}
+                      ? 'Preferência ou contexto'
+                      : 'Tarefa para retomar'}
               </label>
               <textarea
                 id="entity-text"
@@ -211,7 +211,7 @@ export function WorkspaceDialog({
                 onChange={(e) => setText(e.target.value)}
                 placeholder={
                   dialog.type === 'dot'
-                    ? 'You are a thoughtful research partner. Compare evidence and be clear about uncertainty.'
+                    ? 'Você é um parceiro de pesquisa criterioso. Compare evidências e deixe as incertezas claras.'
                     : ''
                 }
               />
@@ -219,9 +219,9 @@ export function WorkspaceDialog({
           )}
           {dialog.type === 'dot' && (
             <fieldset className="space-access-fields">
-              <legend>Space access</legend>
+              <legend>Acesso aos espaços</legend>
               <p className="muted">
-                Choose where this Dot can read and edit pages.
+                Escolha onde este Dot pode ler e editar páginas.
               </p>
               {workspace.spaces.map((space) => (
                 <label className="permission-row" key={space.id}>
@@ -241,7 +241,7 @@ export function WorkspaceDialog({
                 </label>
               ))}
               <label className="field-label" htmlFor="default-space">
-                Default destination for saved pages
+                Destino padrão das páginas salvas
               </label>
               <select
                 id="default-space"
@@ -250,7 +250,7 @@ export function WorkspaceDialog({
                 onChange={(event) => setDefaultSpace(event.target.value)}
               >
                 <option value="" disabled>
-                  Choose a Space
+                  Escolha um espaço
                 </option>
                 {workspace.spaces
                   .filter((space) => spaceIds.includes(space.id))
@@ -271,10 +271,10 @@ export function WorkspaceDialog({
                   onChange={(e) => setResearch(e.target.checked)}
                 />
                 <span>
-                  <strong>Public-page research</strong>
+                  <strong>Pesquisa em páginas públicas</strong>
                   <small>
-                    Allow the server-side read-only browser tool. Global
-                    settings always take precedence.
+                    Permitir a ferramenta de navegação somente leitura do servidor.
+                    As configurações globais sempre têm prioridade.
                   </small>
                 </span>
               </label>
@@ -285,10 +285,10 @@ export function WorkspaceDialog({
                   onChange={(e) => setMemory(e.target.checked)}
                 />
                 <span>
-                  <strong>Use saved memories</strong>
+                  <strong>Usar memórias salvas</strong>
                   <small>
-                    Include your preferences in new turns. Changing permission
-                    stops active work.
+                    Incluir suas preferências em novas interações. Alterar esta
+                    permissão interrompe o trabalho em andamento.
                   </small>
                 </span>
               </label>
@@ -296,9 +296,9 @@ export function WorkspaceDialog({
           )}
           {dialog.type === 'dot' && (
             <fieldset className="space-access-fields">
-              <legend>Automatic Learning</legend>
+              <legend>Aprendizado automático</legend>
               <label className="field-label" htmlFor="learning-container">
-                Learning container ID
+                ID do contêiner de aprendizado
               </label>
               <input
                 id="learning-container"
@@ -313,10 +313,10 @@ export function WorkspaceDialog({
                 }}
               />
               <p className="muted" id="learning-help">
-                Create this container in your Intelligence project first. New
-                conversations will contribute evidence to it. Leave blank to
-                keep new conversations out of Learning. Existing conversations
-                retain their original assignment.
+                Primeiro, crie este contêiner no seu projeto Intelligence. Novas
+                conversas contribuirão com evidências. Deixe em branco para não
+                incluir novas conversas no aprendizado. As conversas existentes
+                mantêm a atribuição original.
               </p>
               <label className="permission-row">
                 <input
@@ -326,12 +326,12 @@ export function WorkspaceDialog({
                   onChange={(event) => setSkillDelivery(event.target.checked)}
                 />
                 <span>
-                  <strong>Use published skills</strong>
+                  <strong>Usar habilidades publicadas</strong>
                   <small>
-                    Load reviewed skills from each conversation’s assigned
-                    container. Enable delivery in Intelligence too. Turning this
-                    off stops skill loading; it does not stop evidence
-                    collection.
+                    Carregar habilidades revisadas do contêiner atribuído a cada
+                    conversa. Ative também a distribuição no Intelligence.
+                    Desativar esta opção interrompe o carregamento de habilidades,
+                    mas não a coleta de evidências.
                   </small>
                 </span>
               </label>
@@ -340,7 +340,7 @@ export function WorkspaceDialog({
                 target="_blank"
                 rel="noreferrer"
               >
-                Set up Learning and review skills ↗
+                Configurar o aprendizado e revisar habilidades ↗
               </a>
             </fieldset>
           )}
@@ -350,28 +350,29 @@ export function WorkspaceDialog({
           {dialog.type === 'schedule' && (
             <>
               <label className="field-label" htmlFor="schedule-interval">
-                Repeat after each successful run
+                Repetir após cada execução bem-sucedida
               </label>
               <select
                 id="schedule-interval"
                 value={interval}
                 onChange={(e) => setInterval(e.target.value)}
               >
-                <option value="60">Every minute (testing)</option>
-                <option value="3600">Every hour</option>
-                <option value="86400">Every day</option>
-                <option value="604800">Every week</option>
+                <option value="60">A cada minuto (teste)</option>
+                <option value="3600">A cada hora</option>
+                <option value="86400">Todos os dias</option>
+                <option value="604800">Toda semana</option>
               </select>
               <p className="muted">
-                Runs on the server in this same conversation, even with the tab
-                closed. Failed or interrupted runs wait for manual retry. Review
-                completed work before retrying an interrupted run.
+                Executa no servidor, nesta mesma conversa, mesmo com a aba
+                fechada. Execuções com falha ou interrompidas aguardam uma nova
+                tentativa manual. Revise o trabalho concluído antes de repetir
+                uma execução interrompida.
               </p>
             </>
           )}
           {dialog.type === 'settings' && (
             <fieldset className="appearance-fields">
-              <legend>Appearance</legend>
+              <legend>Aparência</legend>
               <div className="segmented" role="radiogroup">
                 {(['system', 'light', 'dark'] as ThemePreference[]).map(
                   (option) => (
@@ -386,50 +387,50 @@ export function WorkspaceDialog({
                           setThemePreference(option);
                         }}
                       />
-                      <span>{option[0].toUpperCase() + option.slice(1)}</span>
+                      <span>{({ system: 'Sistema', light: 'Claro', dark: 'Escuro' })[option]}</span>
                     </label>
                   ),
                 )}
               </div>
               <p className="muted">
-                Saved in this browser. System follows your device.
+                Salvo neste navegador. A opção Sistema segue as preferências do dispositivo.
               </p>
             </fieldset>
           )}
           {dialog.type === 'settings' && (
             <div className="config-note">
-              <strong>Service setup</strong>
+              <strong>Configuração dos serviços</strong>
               <p>
                 {workspace.setup.missing.length ? (
                   <>
-                    Add{' '}
+                    Adicione{' '}
                     {workspace.setup.missing.map((name, index) => (
                       <span key={name}>
                         {index > 0 && ', '}
                         <code>{name}</code>
                       </span>
                     ))}{' '}
-                    to the server environment, then restart.
+                    ao ambiente do servidor e reinicie-o.
                   </>
                 ) : (
-                  'Text configuration is present. A successful conversation confirms connectivity.'
+                  'A configuração de texto está presente. Uma conversa bem-sucedida confirma a conexão.'
                 )}
               </p>
               <p>
                 Slack: {workspace.setup.slack.replaceAll('_', ' ')}. Voice:{' '}
                 {workspace.setup.voice
-                  ? 'configuration present'
-                  : 'needs VOICE_API_KEY and VOICE_MODEL'}
+                  ? 'configurada'
+                  : 'requer VOICE_API_KEY e VOICE_MODEL'}
                 .
               </p>
               <p>
-                Setup and usage metadata is collected by default.{' '}
+                Metadados de configuração e uso são coletados por padrão.{' '}
                 <a
                   href="https://github.com/CopilotKit/OpenDots/blob/main/docs/SETUP-TELEMETRY.md"
                   target="_blank"
                   rel="noreferrer"
                 >
-                  Tracking and opt-out details
+                  Detalhes sobre telemetria e como desativá-la
                 </a>
               </p>
               <a
@@ -437,14 +438,15 @@ export function WorkspaceDialog({
                 target="_blank"
                 rel="noreferrer"
               >
-                Template setup guide ↗
+                Guia de configuração do modelo ↗
               </a>
             </div>
           )}
           {dialog.type === 'memory' && (
             <p className="muted">
-              Memories are explicit preferences, not automatic learning. Avoid
-              secrets; enabled memories go to your model provider.
+              Memórias são preferências explícitas, não aprendizado automático.
+              Evite informações secretas; as memórias ativadas são enviadas ao
+              provedor do modelo.
             </p>
           )}
           {error && (
@@ -453,7 +455,7 @@ export function WorkspaceDialog({
             </p>
           )}
           <button className="primary full" disabled={busy}>
-            {busy ? 'Saving…' : 'Save'}
+            {busy ? 'Salvando…' : 'Salvar'}
           </button>
         </form>
       </section>

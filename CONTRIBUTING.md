@@ -1,17 +1,17 @@
-# Contributing to OpenDots
+# Como contribuir com o OpenDots
 
-OpenDots is an application template in early development. Focus changes on Spaces, Specialist Dots, text and calls, Slack, and inspectable background work. Keep the documented SDK integrations functional and report missing configuration clearly.
+O OpenDots é um modelo de aplicação em estágio inicial de desenvolvimento. Concentre as alterações em espaços, Dots especialistas, texto e chamadas, Slack e tarefas em segundo plano que possam ser inspecionadas. Mantenha funcionais as integrações de SDK documentadas e indique claramente quando faltar configuração.
 
-For bugs, include the app mode, Node version, steps to reproduce, expected behavior, and actual behavior. Remove credentials and private page content from logs or screenshots.
+Ao relatar bugs, informe o modo da aplicação, a versão do Node, as etapas para reproduzir, o comportamento esperado e o observado. Remova credenciais e conteúdo privado de páginas dos logs e capturas de tela.
 
-For features, describe the user workflow before proposing an implementation. Clearly separate functioning integrations from sample fixtures and planned work. Do not add controls that appear to connect a service when no adapter exists.
+Para propor recursos, descreva primeiro o fluxo do usuário. Diferencie claramente integrações funcionais, simulações de exemplo e trabalho planejado. Não adicione controles que pareçam conectar um serviço quando não houver um adaptador.
 
-Before opening a pull request:
+Antes de abrir um pull request:
 
-- Add regression coverage for changes to durable jobs, permissions, cancellation, or API behavior.
-- Run the repository's formatter, lint, typecheck, tests, and production build.
-- Exercise changed UI behavior and check narrow-screen layouts and keyboard access.
-- Update setup instructions if configuration or dependencies change.
-- Keep credentials, local databases, generated test reports, and internal planning notes out of commits.
+- Adicione testes de regressão para alterações em tarefas persistentes, permissões, cancelamento ou comportamento da API.
+- Execute o formatador, o lint, a verificação de tipos, os testes e a compilação de produção do repositório.
+- Exercite o comportamento alterado da interface e verifique layouts em telas estreitas e o acesso pelo teclado.
+- Atualize as instruções de configuração quando houver mudanças em configurações ou dependências.
+- Não inclua credenciais, bancos de dados locais, relatórios de teste gerados nem notas internas de planejamento nos commits.
 
-Project code is MIT licensed. Preserve applicable notices for any third-party code or assets you contribute.
+O código do projeto está sob a licença MIT. Mantenha os avisos aplicáveis a códigos ou recursos de terceiros que você incluir.

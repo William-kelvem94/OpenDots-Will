@@ -109,7 +109,7 @@ export function PageDocument({
   const latest = async () => {
     if (
       !window.confirm(
-        'Load the latest saved page and replace this draft? Download your draft first if you want to keep it.',
+        'Carregar a versão salva mais recente e substituir este rascunho? Baixe o rascunho antes se quiser guardá-lo.',
       )
     )
       return;
@@ -123,7 +123,7 @@ export function PageDocument({
       setNotice(
         error instanceof Error
           ? error.message
-          : 'Could not load the latest page. Your draft is unchanged.',
+          : 'Não foi possível carregar a versão mais recente da página. Seu rascunho não foi alterado.',
       );
     }
   };
@@ -143,28 +143,28 @@ export function PageDocument({
   }
   const status =
     state.status === 'saving'
-      ? 'Saving…'
+      ? 'Salvando…'
       : state.status === 'saved'
-        ? 'All changes saved'
+        ? 'Todas as alterações foram salvas'
         : state.status === 'dirty'
-          ? 'Unsaved changes'
+          ? 'Alterações não salvas'
           : state.status === 'conflict'
-            ? 'Changes need review'
-            : 'Could not save';
+            ? 'As alterações precisam de revisão'
+            : 'Não foi possível salvar';
   return (
     <section
       className={`document-session ${chatOpen ? 'chat-visible' : ''}`}
-      aria-label="Document workspace"
+      aria-label="Espaço de documentos"
     >
       <div className="document-column">
         <header className="document-topbar">
           <button className="document-back" onClick={onHome}>
             <ArrowLeft size={16} />
-            <span>All pages</span>
+            <span>Todas as páginas</span>
           </button>
           <button
             className="document-icon"
-            aria-label="Toggle page outline"
+            aria-label="Alternar sumário da página"
             onClick={onOutline}
           >
             <PanelLeft size={17} />
@@ -184,38 +184,38 @@ export function PageDocument({
           <DocumentMenu
             items={[
               {
-                label: 'Save now · ⌘/Ctrl S',
+                label: 'Salvar agora · ⌘/Ctrl S',
                 action: () => void controller.flush(true),
               },
               {
-                label: sourceMode ? 'Visual editor' : 'Markdown source',
+                label: sourceMode ? 'Editor visual' : 'Código-fonte Markdown',
                 action: () => {
                   if (sourceMode && !safety.supported) {
                     setNotice(
-                      safety.reason ?? 'This document needs source mode.',
+                      safety.reason ?? 'Este documento precisa ser editado no modo fonte.',
                     );
                     return;
                   }
                   setSource(!sourceMode);
                 },
               },
-              { label: 'Move page', action: () => setMove(!move) },
-              { label: 'New subpage', action: onSubpage },
-              { label: 'Download Markdown', action: download },
+              { label: 'Mover página', action: () => setMove(!move) },
+              { label: 'Nova subpágina', action: onSubpage },
+              { label: 'Baixar Markdown', action: download },
               ...(page.sourceThreadId
                 ? [
                     {
-                      label: 'Open source conversation',
+                      label: 'Abrir conversa de origem',
                       action: () => onThread(page.sourceThreadId!),
                     },
                   ]
                 : []),
               {
-                label: 'Delete page',
+                label: 'Excluir página',
                 action: async () => {
                   if (
                     !window.confirm(
-                      `Delete "${draft.title || 'Untitled'}"? This can't be undone. Any subpages will move to this page's parent.`,
+                      `Excluir "${draft.title || 'Sem título'}"? Esta ação não pode ser desfeita. As subpáginas serão movidas para a página superior.`,
                     )
                   )
                     return;
@@ -238,7 +238,7 @@ export function PageDocument({
                     setNotice(
                       error instanceof Error
                         ? error.message
-                        : 'Could not delete page.',
+                        : 'Não foi possível excluir a página.',
                     );
                   }
                 },
@@ -257,12 +257,12 @@ export function PageDocument({
                 <div>
                   {state.status === 'error' && (
                     <button onClick={() => void controller.flush(true)}>
-                      Retry save
+                      Tentar salvar novamente
                     </button>
                   )}
-                  <button onClick={download}>Download draft</button>
+                  <button onClick={download}>Baixar rascunho</button>
                   {state.status === 'conflict' && (
-                    <button onClick={() => void latest()}>Load latest</button>
+                    <button onClick={() => void latest()}>Carregar versão mais recente</button>
                   )}
                 </div>
               </div>
@@ -270,7 +270,7 @@ export function PageDocument({
             {notice && (
               <div className="document-notice" role="status">
                 {notice}
-                <button onClick={() => setNotice('')}>Dismiss</button>
+                <button onClick={() => setNotice('')}>Fechar</button>
               </div>
             )}
             {move && (
@@ -281,16 +281,16 @@ export function PageDocument({
                 }}
               >
                 <label>
-                  Move under
+                  Mover para dentro de
                   <select
                     autoFocus
-                    aria-label="Parent page"
+                    aria-label="Página principal"
                     value={draft.parentId ?? ''}
                     onChange={(e) =>
                       controller.edit({ parentId: e.target.value || null })
                     }
                   >
-                    <option value="">Space root</option>
+                    <option value="">Início do espaço</option>
                     {pages
                       .filter((p) => !descendants.has(p.id))
                       .map((p) => (
@@ -300,13 +300,13 @@ export function PageDocument({
                       ))}
                   </select>
                 </label>
-                <button onClick={() => setMove(false)}>Done</button>
+                <button onClick={() => setMove(false)}>Concluído</button>
               </div>
             )}
             <input
               className="document-title"
-              aria-label="Page title"
-              placeholder="Untitled page"
+              aria-label="Título da página"
+              placeholder="Página sem título"
               maxLength={160}
               value={draft.title}
               onChange={(event) =>
@@ -317,14 +317,14 @@ export function PageDocument({
               <>
                 <div className="source-mode-label">
                   <FileCode2 size={15} />
-                  <span>Markdown source</span>
+                  <span>Fonte Markdown</span>
                 </div>
                 {!safety.supported && (
                   <p className="source-mode-reason">{safety.reason}</p>
                 )}
                 <textarea
                   className="document-source"
-                  aria-label="Page Markdown"
+                  aria-label="Markdown da página"
                   spellCheck={false}
                   value={draft.content}
                   maxLength={100000}
@@ -335,7 +335,7 @@ export function PageDocument({
               </>
             ) : (
               <Suspense
-                fallback={<div className="editor-loading">Loading editor…</div>}
+                fallback={<div className="editor-loading">Carregando editor…</div>}
               >
                 <RichEditor
                   value={draft.content}

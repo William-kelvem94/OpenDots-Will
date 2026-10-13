@@ -2,11 +2,11 @@
 
 # OpenDots
 
-### Always-on AI coworkers that move between text, calls, and Slack.
+### Colegas de IA sempre disponíveis, no chat, em chamadas e no Slack.
 
-**An open-source template for persistent AI agents, each with its own computer. Available on Web and Mobile.**
+**Um modelo de código aberto para agentes de IA persistentes, cada um com seu próprio computador. Disponível na Web e em dispositivos móveis.**
 
-Built with [CopilotKit](https://github.com/CopilotKit/CopilotKit) and [AG-UI](https://docs.ag-ui.com/introduction). · [Get started](#get-started) · [Overview](#overview) · [Architecture](#architecture) · [Features](#features) · [Contributing](CONTRIBUTING.md)
+Criado com [CopilotKit](https://github.com/CopilotKit/CopilotKit) e [AG-UI](https://docs.ag-ui.com/introduction). · [Começar](#começar) · [Visão geral](#visão-geral) · [Arquitetura](#arquitetura) · [Recursos](#recursos) · [Como contribuir](CONTRIBUTING.md)
 
 [![CI](https://github.com/CopilotKit/OpenDots/actions/workflows/ci.yml/badge.svg)](https://github.com/CopilotKit/OpenDots/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
@@ -14,9 +14,9 @@ Built with [CopilotKit](https://github.com/CopilotKit/CopilotKit) and [AG-UI](ht
 
 <a href="https://trendshift.io/repositories/275323" target="_blank"><img src="https://trendshift.io/api/badge/trendshift/repositories/275323/daily?language=TypeScript" alt="CopilotKit/OpenDots | Trendshift #2 TypeScript Repository Of The Day" width="250" height="55"/></a>
 
-Host OpenDots on your own infrastructure. Conversations require CopilotKit Intelligence: use the hosted service, the [local Docker evaluation](docs/SETUP.md#local-intelligence-evaluation), or a licensed [self-hosted deployment](https://docs.copilotkit.ai/intelligence/self-hosting). Clone this template and customize it however you want.
+Hospede o OpenDots na sua própria infraestrutura. As conversas exigem o CopilotKit Intelligence: use o serviço hospedado, a [avaliação local com Docker](docs/SETUP.md#local-intelligence-evaluation) ou uma [implantação autogerenciada licenciada](https://docs.copilotkit.ai/intelligence/self-hosting). Clone este modelo e personalize-o como quiser.
 
-[**Building on OpenDots? Meet with the CopilotKit team →**](https://www.copilotkit.ai/talk-to-an-engineer?ref=opendots_readme)
+[**Desenvolvendo com OpenDots? Converse com a equipe do CopilotKit →**](https://www.copilotkit.ai/talk-to-an-engineer?ref=opendots_readme)
 
 </div>
 
@@ -32,19 +32,19 @@ https://github.com/user-attachments/assets/4c74fe7d-ecdd-42dd-95da-5d34f9b9576e
 
 </div>
 
-_Ask → browse → approve → save. A live computer view and a human review card appear right in chat, then the approved draft becomes an editable Space page. Enlarged for readability; idle time is trimmed and playback is accelerated._
+_Pergunte → navegue → aprove → salve. A visualização ao vivo do computador e um cartão de revisão aparecem no chat; depois, o rascunho aprovado vira uma página editável no espaço. A imagem foi ampliada para facilitar a leitura; os períodos sem atividade foram removidos e a reprodução foi acelerada._
 
-## Overview
+## Visão geral
 
-OpenDots is a starting point for building your own agent workspace. Clone it, define your Dots, connect your services, and adapt the interface and tools to your needs.
+O OpenDots é um ponto de partida para criar seu próprio espaço de trabalho com agentes. Clone o projeto, defina seus Dots, conecte seus serviços e adapte a interface e as ferramentas às suas necessidades.
 
-**A template, not a hosted product.** You run the application and configure its infrastructure. The template is in early development; the Features section below describes what's included and distinguishes local verification from connected-service testing.
+**É um modelo, não um produto hospedado.** Você executa a aplicação e configura a infraestrutura. O modelo ainda está em desenvolvimento inicial; a seção Recursos descreve o que está incluído e diferencia verificações locais de testes com serviços conectados.
 
-### Spaces
+### Espaços
 
-A Space is a home for working documents. Dots appear separately in navigation and can be granted access to multiple Spaces in their settings. Each Dot has a default destination for saved pages; existing installations retain their original Space access. Browse pages in a searchable library, switch between grid and list views, and organize documents as nested subpages. Open a page in a focused visual editor with formatting, slash commands, and undo/redo. Write directly, save a conversation as a page, or ask a specialist to create and revise content.
+Um espaço reúne documentos de trabalho. Os Dots aparecem separadamente na navegação e podem receber acesso a vários espaços nas configurações. Cada Dot tem um destino padrão para páginas salvas; instalações existentes mantêm o acesso original. Navegue pelas páginas em uma biblioteca pesquisável, alterne entre as visualizações em grade e lista e organize documentos em subpáginas. Abra uma página no editor visual com formatação, comandos de barra e desfazer/refazer. Escreva diretamente, salve uma conversa como página ou peça a um especialista para criar e revisar conteúdo.
 
-Pages stay in the local workspace database. Their conversations use CopilotKit Threads, with a separate conversation for each page and specialist. Page links connect the document workspace to Dot chat. Manual editing works before you configure conversation services. Autosave reports its progress, failed saves retain your draft, and revision checks prevent stale edits from overwriting newer content. Markdown source mode remains available.
+As páginas ficam no banco de dados local do espaço de trabalho. As conversas usam Threads do CopilotKit, com uma conversa separada para cada página e especialista. Links de páginas conectam a área de documentos ao chat do Dot. A edição manual funciona antes da configuração dos serviços de conversa. O salvamento automático informa o progresso, mantém o rascunho em caso de falha e verifica revisões para impedir que conteúdo antigo substitua versões mais recentes. O modo de edição do Markdown continua disponível.
 
 <div align="center">
 
@@ -56,17 +56,17 @@ https://github.com/user-attachments/assets/d20c3405-4339-49e7-a799-43298728015c
 
 </div>
 
-_Open a Space, navigate to its launch brief, ask Scout about the saved page, and continue in Dot chat. This recording uses live page chat and example launch content._
+_Abra um espaço, acesse o resumo de lançamento, pergunte ao Scout sobre a página salva e continue no chat do Dot. Esta gravação usa o chat de página conectado e conteúdo de exemplo._
 
-### Specialist Dots
+### Dots especialistas
 
-Give each Dot a name, role, instructions, and permitted tools. A researcher can investigate a topic; a writer can turn findings into a draft. Inspect their work and control what they can do.
+Dê a cada Dot um nome, papel, instruções e ferramentas permitidas. Um pesquisador pode investigar um tema; um redator pode transformar as descobertas em um rascunho. Revise o trabalho e controle o que cada um pode fazer.
 
-### Dot computers
+### Computadores dos Dots
 
-Each Dot can have its own computer, using [OpenBot](https://github.com/CopilotKit/OpenBot)'s container supervisor and computer service. Its browser profile and workspace files persist across stop/start. The Computer panel exposes browser control, human takeover, files, terminal output, and activity, with browser, file, and shell permissions set per Dot. The application keeps service credentials on the server and derives a different computer credential for each Dot.
+Cada Dot pode ter seu próprio computador, usando o supervisor de contêineres e o serviço de computador do [OpenBot](https://github.com/CopilotKit/OpenBot). O perfil do navegador e os arquivos persistem após parar e iniciar o serviço. O painel do computador oferece controle do navegador, transferência do controle para uma pessoa, arquivos, saída do terminal e atividade; as permissões de navegador, arquivos e terminal são definidas por Dot. A aplicação mantém as credenciais do serviço no servidor e gera uma credencial de computador diferente para cada Dot.
 
-See [Computer setup](docs/COMPUTERS.md) to build the pinned services and connect your deployment. Computer tools require those services; an unconfigured template does not execute commands on your host.
+Consulte [Configuração do computador](docs/COMPUTERS.md) para criar os serviços fixados e conectá-los à implantação. As ferramentas de computador dependem desses serviços; um modelo sem configuração não executa comandos na sua máquina.
 
 <div align="center">
 
@@ -78,21 +78,21 @@ https://github.com/user-attachments/assets/30b691c3-0f66-4964-9fdb-67d4feab5568
 
 </div>
 
-_Ask Scout to open a website, summarize it, save notes, and verify the file. Every computer action in this demo is requested through chat; CopilotKit tool renderers show the live browser, saved file, and terminal output inline._
+_Peça ao Scout para abrir um site, resumir o conteúdo, salvar notas e verificar o arquivo. Todas as ações no computador desta demonstração são solicitadas pelo chat; os componentes de ferramentas do CopilotKit exibem o navegador ao vivo, o arquivo salvo e a saída do terminal na conversa._
 
-### Review before saving
+### Revise antes de salvar
 
-Ask a Dot to show a draft before saving it. A CopilotKit human-in-the-loop card pauses the conversation for **Approve & save** or **Decline**. Approval creates the page in an authorized Space and returns a link; retries with the same draft recover that saved page. A changed draft needs a new review. The agent continues after your decision.
+Peça ao Dot para mostrar um rascunho antes de salvá-lo. Um cartão de aprovação humana do CopilotKit pausa a conversa e oferece **Aprovar e salvar** ou **Recusar**. A aprovação cria a página em um espaço autorizado e retorna um link; novas tentativas com o mesmo rascunho recuperam a página salva. Um rascunho alterado precisa de uma nova revisão. O agente continua após sua decisão.
 
-### Connections
+### Conexões
 
-Give a Dot tools from any MCP server, such as email, calendar, GitHub, or your own services. Read-only tools run on their own. Any other tool pauses for an **Approve & run** card in chat, and only your approval runs it. You can turn each tool on or off per Dot. See [Connections](docs/CONNECTIONS.md).
+Disponibilize para um Dot ferramentas de qualquer servidor MCP, como e-mail, calendário, GitHub ou serviços próprios. Ferramentas somente leitura são executadas diretamente. Para qualquer outra ferramenta, o chat pausa e mostra um cartão **Aprovar e executar**; a ação só acontece com sua aprovação. Você pode ativar ou desativar cada ferramenta por Dot. Consulte [Conexões](docs/CONNECTIONS.md).
 
-### Text and calls
+### Texto e chamadas
 
-A continuous conversation keeps the Dot's avatar and status above the messages, with text and call controls close at hand. Work updates, source links, and call receipts appear in the timeline; a side panel shows results or the agent's computer.
+Uma conversa contínua mantém o avatar e o status do Dot acima das mensagens, com os controles de texto e chamada sempre à mão. Atualizações do trabalho, links de fontes e registros de chamadas aparecem na linha do tempo; um painel lateral mostra resultados ou o computador do agente.
 
-Calls pair realtime speech with a separate compute agent, so the conversation can continue while longer work runs. Both use the same conversation context and tool permissions. The call screen includes a live timer, separate user and Dot captions, microphone mute, speaker mute, and a minimized view for continuing in chat. Voice needs separate provider configuration.
+As chamadas combinam fala em tempo real com um agente de execução separado, permitindo que a conversa continue enquanto tarefas mais longas são executadas. Ambos usam o mesmo contexto e as mesmas permissões de ferramentas. A tela da chamada inclui cronômetro, legendas separadas para você e o Dot, controles para silenciar o microfone e o áudio e uma visualização minimizada para continuar no chat. O recurso de voz exige configuração própria do provedor.
 
 <div align="center">
 
@@ -104,11 +104,11 @@ https://github.com/user-attachments/assets/3c06cf71-39ed-4e2b-b846-5463b2722389
 
 </div>
 
-_Connect, talk, mute, minimize, and return to chat. This is a silent screen capture of a real call, with waiting time trimmed and playback accelerated._
+_Conecte, converse, silencie, minimize e volte ao chat. Esta é uma captura sem áudio de uma chamada real, com o tempo de espera removido e a reprodução acelerada._
 
 ### Slack
 
-Mention a Dot through a managed Slack connection using Channels SDK, then continue in its thread. The integration follows [OpenTag](https://github.com/CopilotKit/OpenTag), with an explicit workspace/user allowlist and a selected specialist. See [Slack setup](docs/SETUP.md#slack) to connect your deployment.
+Mencione um Dot por uma conexão gerenciada do Slack usando o Channels SDK e continue na conversa correspondente. A integração segue o [OpenTag](https://github.com/CopilotKit/OpenTag), com uma lista explícita de espaços e usuários autorizados e um especialista selecionado. Consulte [Configuração do Slack](docs/SETUP.md#slack) para conectar sua implantação.
 
 <div align="center">
 
@@ -120,15 +120,15 @@ https://github.com/user-attachments/assets/27d03a6c-a9e0-4c29-8d96-fafe0fbae20f
 
 </div>
 
-Bring your agents into Slack with [Channels SDK](https://github.com/CopilotKit/channels-sdk). See the [managed Channels documentation](https://docs.copilotkit.ai/intelligence/channels) to connect them through CopilotKit Intelligence.
+Leve seus agentes ao Slack com o [Channels SDK](https://github.com/CopilotKit/channels-sdk). Consulte a [documentação dos Channels gerenciados](https://docs.copilotkit.ai/intelligence/channels) para conectá-los pelo CopilotKit Intelligence.
 
-## Architecture
+## Arquitetura
 
-### AG-UI connects the agent to the interface
+### O AG-UI conecta o agente à interface
 
-[AG-UI](https://docs.ag-ui.com/introduction) carries streamed messages, tool calls, and agent state between the backend and CopilotKit components. Computer activity appears inline as the agent works; human-in-the-loop cards pause a tool call for your decision before it continues.
+[AG-UI](https://docs.ag-ui.com/introduction) transporta mensagens em fluxo, chamadas de ferramentas e o estado do agente entre o backend e os componentes do CopilotKit. A atividade do computador aparece na conversa enquanto o agente trabalha; cartões de aprovação humana pausam uma chamada de ferramenta até sua decisão.
 
-The template uses TanStack AI for model streaming and server-tool execution, CopilotKit's React SDK and runtime, Intelligence for durable Threads, and Channels SDK for Slack. Pages, application metadata, and background-work state are stored separately from conversation history.
+O modelo usa TanStack AI para transmitir respostas do modelo e executar ferramentas no servidor, o SDK React e o runtime do CopilotKit, o Intelligence para Threads persistentes e o Channels SDK para o Slack. Páginas, metadados da aplicação e estado do trabalho em segundo plano são armazenados separadamente do histórico de conversas.
 
 ```mermaid
 flowchart TB
@@ -150,13 +150,13 @@ flowchart TB
   Runtime --> Metadata[(Pages, Spaces, Dots, work metadata)]
 ```
 
-You configure the Intelligence project, model provider, and channel connection for your deployment; calls also need a speech provider. Credentials stay on the server. Missing configuration should produce a clear setup state, and test fixtures should remain visibly separate from live integrations.
+Você configura o projeto Intelligence, o provedor do modelo e a conexão de canais da sua implantação; as chamadas também precisam de um provedor de voz. As credenciais ficam no servidor. Configurações ausentes devem aparecer claramente, e dados de teste devem permanecer visivelmente separados das integrações reais.
 
-[OpenMuse](https://github.com/CopilotKit/OpenMuse) and [OpenBot](https://github.com/CopilotKit/openbot) are code references for persistent work, agent computers, and execution controls. OpenDots can be adapted to your own workflows and deployment choices.
+[OpenMuse](https://github.com/CopilotKit/OpenMuse) e [OpenBot](https://github.com/CopilotKit/openbot) servem como referências de código para trabalho persistente, computadores dos agentes e controles de execução. O OpenDots pode ser adaptado aos seus fluxos de trabalho e às opções de implantação.
 
-## Get started
+## Começar
 
-Use **Node.js 24** and **npm**:
+Use **Node.js 24** e **npm**:
 
 ```sh
 git clone https://github.com/CopilotKit/OpenDots.git
@@ -166,68 +166,68 @@ cp .env.example .env
 npm run dev
 ```
 
-Open **http://127.0.0.1:5173**. You can create Spaces, write pages, and configure Dots before connecting services. To start chatting, connect an Intelligence project and a model.
+Abra **http://127.0.0.1:5173**. Você pode criar espaços, escrever páginas e configurar Dots antes de conectar serviços. Para começar a conversar, conecte um projeto Intelligence e um modelo.
 
-Choose where to store conversations before connecting. For local Docker evaluation, follow [Local Intelligence evaluation](docs/SETUP.md#local-intelligence-evaluation). For hosted Intelligence, sign in and select or create a project in the `OpenDots` folder:
+Escolha onde armazenar as conversas antes de conectar. Para avaliar localmente com Docker, siga a [avaliação local do Intelligence](docs/SETUP.md#local-intelligence-evaluation). Para usar o Intelligence hospedado, entre e selecione ou crie um projeto na pasta `OpenDots`:
 
 ```sh
 npx copilotkit@latest login
 npx copilotkit@latest project select
 ```
 
-`project select` writes a project key to `.env` as `CPK_INTELLIGENCE_API_KEY`. Keep the generated `CPK_TELEMETRY_ID` with that key so SDK usage can resolve to your Intelligence account. Then add `OPENAI_API_KEY` and `OPENAI_MODEL` to `.env` and restart `npm run dev`.
+`project select` grava uma chave de projeto em `.env` como `CPK_INTELLIGENCE_API_KEY`. Mantenha o `CPK_TELEMETRY_ID` gerado junto com essa chave para que o uso do SDK seja associado à sua conta Intelligence. Depois, adicione `OPENAI_API_KEY` e `OPENAI_MODEL` a `.env` e reinicie `npm run dev`.
 
-Do not run `copilotkit onboard` in this folder. OpenDots already contains its CopilotKit integration, and onboarding adds a second, generic one.
+Não execute `copilotkit onboard` nesta pasta. O OpenDots já inclui a integração com CopilotKit; o onboarding adicionaria uma segunda integração genérica.
 
-See [Setup](docs/SETUP.md) for configuration, Slack, calls, the browser service, and Docker.
+Consulte [Configuração](docs/SETUP.md) para saber mais sobre credenciais, Slack, chamadas, o serviço de navegador e Docker.
 
-## Data and privacy
+## Dados e privacidade
 
-Conversation messages, tool calls, and run events are persisted in the configured Intelligence deployment. The hosted setup sends them to CopilotKit's cloud; the local evaluation setup uses Intelligence on your machine. OpenDots has no standalone SQLite conversation store. SQLite stores pages, workspace metadata, and thread bindings separately.
+Mensagens, chamadas de ferramentas e eventos de execução são persistidos na implantação configurada do Intelligence. A configuração hospedada os envia à nuvem do CopilotKit; a avaliação local usa o Intelligence na sua máquina. O OpenDots não armazena conversas diretamente no SQLite. O SQLite mantém páginas, metadados do espaço de trabalho e vínculos com Threads em separado.
 
-The configured model provider receives conversation context, including authorized page content and tool results. Local Intelligence does not make a remote model local: configure the app's model and the Automatic Learning model separately. Public-web research sends queries and selected URLs to Parallel by default; set `WEB_SEARCH_PROVIDER=disabled` to disable those tools. Speech and messaging integrations send data to their configured providers when used.
+O provedor de modelo configurado recebe o contexto da conversa, incluindo conteúdo de páginas autorizadas e resultados de ferramentas. Usar o Intelligence local não torna local um modelo remoto: configure separadamente o modelo da aplicação e o modelo de Aprendizado automático. Por padrão, a pesquisa na Web envia consultas e URLs selecionadas ao Parallel; defina `WEB_SEARCH_PROVIDER=disabled` para desativar essas ferramentas. Integrações de voz e mensagens enviam dados aos provedores configurados quando usadas.
 
-CopilotKit SDK telemetry collects usage metadata separately from conversation persistence. OpenDots also records bounded browser setup stages and first successful assistant activation with a random installation ID; the same opt-out flags disable this tracking and purge pending setup events. See [browser setup telemetry](docs/SETUP-TELEMETRY.md). Runtime events are tagged `OpenDots`; see [signup and usage tracking](docs/TELEMETRY.md). Set `COPILOTKIT_TELEMETRY_DISABLED=true` or `DO_NOT_TRACK=1` to opt out; see [CopilotKit telemetry](https://docs.copilotkit.ai/telemetry). Review [CopilotKit's privacy policy](https://www.copilotkit.ai/privacy-policy) and the policies and retention settings of each service you configure. Installing or renewing local Intelligence still requires CopilotKit sign-in and internet access.
+A telemetria do SDK CopilotKit coleta metadados de uso separadamente do armazenamento de conversas. O OpenDots também registra etapas limitadas da configuração no navegador e a primeira ativação bem-sucedida do assistente, usando um ID de instalação aleatório; as mesmas opções de desativação interrompem esse rastreamento e removem eventos de configuração pendentes. Consulte [telemetria da configuração no navegador](docs/SETUP-TELEMETRY.md). Os eventos do runtime são identificados como `OpenDots`; veja [rastreamento de cadastro e uso](docs/TELEMETRY.md). Defina `COPILOTKIT_TELEMETRY_DISABLED=true` ou `DO_NOT_TRACK=1` para desativar; consulte a [telemetria do CopilotKit](https://docs.copilotkit.ai/telemetry). Revise a [política de privacidade do CopilotKit](https://www.copilotkit.ai/privacy-policy) e as políticas e configurações de retenção de cada serviço que você configurar. Instalar ou renovar o Intelligence local ainda exige login no CopilotKit e acesso à Internet.
 
-## Features
+## Recursos
 
-| Area                       | Included                                                                                                                                |
+| Área                       | Incluído                                                                                                                                 |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| Spaces and Specialist Dots | Saved names, role instructions, and per-Dot research and memory permissions                                                             |
-| Pages                      | Searchable library, visual editor, slash commands, autosave, and revision checks                                                        |
-| Conversations              | React SDK chat and Threads integration, page-specific conversations, and source links                                                   |
-| Slack                      | Managed Channels SDK declaration with workspace and user allowlists                                                                     |
-| Calls                      | WebRTC speech, delegated compute, bounded sessions, hangup, and timeline receipts                                                       |
-| Background work            | Scheduled server-side turns in their original conversation, with pause and retry controls                                               |
-| Browser                    | Separate read-only public-page service with page capture and navigation limits                                                          |
-| Dot computers              | Per-Dot browser profiles, files, shell, takeover, permissions, and action records through OpenBot                                       |
-| Connections                | Per-Dot MCP servers, per-tool access, and owner approval for non-read-only actions                                                      |
-| Appearance                 | System, light, and dark themes; dark colors are derived at build time from the light styles                                             |
-| Memory                     | User-managed preferences that permitted Dots can use                                                                                    |
-| Automatic Learning         | Per-Dot Learning containers, conversation evidence routing, and published-skill delivery; see [setup](docs/SETUP.md#automatic-learning) |
-| Deployment                 | Local Node setup and separate application/browser containers                                                                            |
+| Espaços e Dots especialistas | Nomes salvos, instruções de papel e permissões de pesquisa e memória por Dot                                                            |
+| Páginas                      | Biblioteca pesquisável, editor visual, comandos de barra, salvamento automático e verificação de revisões                              |
+| Conversas                    | Chat com SDK React e Threads, conversas por página e links para fontes                                                                  |
+| Slack                        | Declaração gerenciada do Channels SDK com listas de espaços e usuários autorizados                                                       |
+| Chamadas                     | Voz por WebRTC, execução delegada, sessões limitadas, encerramento e registros na linha do tempo                                        |
+| Trabalho em segundo plano    | Tarefas agendadas no servidor, na conversa original, com controles de pausa e nova tentativa                                           |
+| Navegador                    | Serviço separado e somente leitura para páginas públicas, com captura e limites de navegação                                            |
+| Computadores dos Dots        | Perfis de navegador, arquivos, terminal, transferência de controle, permissões e registros de ações por Dot via OpenBot               |
+| Conexões                     | Servidores MCP por Dot, acesso por ferramenta e aprovação do proprietário para ações que não sejam somente leitura                      |
+| Aparência                    | Temas do sistema, claro e escuro; as cores escuras são derivadas durante a compilação dos estilos claros                                |
+| Memórias                     | Preferências gerenciadas pelo usuário que os Dots autorizados podem usar                                                                |
+| Aprendizado automático       | Contêineres de aprendizado por Dot, roteamento de evidências de conversas e entrega de habilidades publicadas; veja [configuração](docs/SETUP.md#automatic-learning) |
+| Implantação                  | Configuração local com Node e contêineres separados para aplicação e navegador                                                         |
 
-Scheduled tasks run in their original conversation. If a worker stops or its lease expires during a run, OpenDots marks that run **Interrupted** and waits for an explicit retry. Review its pages and computer actions, then use **Retry after review** when appropriate. Completed effects may already be present even when a run has no final result.
+As tarefas agendadas são executadas na conversa original. Se um worker parar ou seu prazo expirar durante uma execução, o OpenDots a marca como **Interrompida** e aguarda uma nova tentativa explícita. Revise as páginas e ações no computador e, quando apropriado, use **Tentar novamente após revisão**. Os efeitos da execução podem já ter ocorrido mesmo sem um resultado final.
 
-Local checks cover setup, persistence, permissions, SDK failure handling, and browser isolation. Automated tests use service fixtures. **Live Intelligence, model responses, and page-context chat were verified on September 29, 2026.** Live OpenBot computer browsing, file creation, shell verification, and file persistence across stop/start were also verified locally. Live Realtime speech, call controls, and receipt persistence were verified locally on September 30, 2026. Slack and spoken compute delegation still need connected-service verification. See [recording notes](docs/demos/README.md) for the demonstrated flows and limits.
+As verificações locais cobrem configuração, persistência, permissões, tratamento de falhas do SDK e isolamento do navegador. Os testes automatizados usam simulações dos serviços. **Intelligence, respostas do modelo e chat com contexto de página foram verificados ao vivo em 29 de setembro de 2026.** A navegação do computador OpenBot, a criação de arquivos, a verificação pelo terminal e a persistência dos arquivos ao parar e iniciar também foram verificadas localmente. A fala em tempo real, os controles de chamada e a persistência dos registros foram verificados localmente em 30 de setembro de 2026. Slack e delegação de execução por voz ainda precisam de verificação com os serviços conectados. Consulte as [notas das gravações](docs/demos/README.md) para ver os fluxos demonstrados e suas limitações.
 
-Automatic Learning routing and skill delivery are configured locally. Cloud schedules, eligible-thread counts, and published-skill delivery still need connected-service verification. Skills require review and publication in Intelligence; existing conversations without a container are not enrolled retroactively.
+O roteamento do Aprendizado automático e a entrega de habilidades estão configurados localmente. Agendamentos na nuvem, contagem de Threads elegíveis e entrega de habilidades publicadas ainda precisam ser verificados com os serviços conectados. As habilidades precisam ser revisadas e publicadas no Intelligence; conversas existentes sem contêiner não são incluídas retroativamente.
 
-This is a single-owner starting point. Shared editing, invitations, file uploads, and interactive page embeds are not included. Schedules are recurring instructions, not a complete goal or event-trigger system. Specialist Dots have separate roles and conversations; multi-Dot group conversations and automatic delegation are further work.
+Este projeto parte do princípio de um único proprietário. Edição compartilhada, convites, envio de arquivos e incorporações interativas de páginas não estão incluídos. Agendamentos são instruções recorrentes, não um sistema completo de metas ou acionamento por eventos. Dots especialistas têm papéis e conversas separados; conversas em grupo com vários Dots e delegação automática ainda precisam ser desenvolvidas.
 
-### Extending the template
+### Como ampliar o modelo
 
-- Add identity, Space membership, and shared page editing for multi-user deployments.
-- Add file attachments and richer page content.
-- Add event triggers and a persistent responsibility lifecycle.
-- Extend tools and approval flows for your own workflows.
-- Add richer artifacts, connected-app context, and specialist coordination.
+- Adicione identidade, associação a espaços e edição compartilhada de páginas para implantações com vários usuários.
+- Inclua anexos e conteúdo mais rico nas páginas.
+- Adicione gatilhos de eventos e um ciclo persistente de responsabilidades.
+- Amplie as ferramentas e os fluxos de aprovação para seus processos.
+- Inclua materiais mais ricos, contexto de aplicativos conectados e coordenação entre especialistas.
 
-## Contributing
+## Como contribuir
 
-See [Contributing](CONTRIBUTING.md) for development guidance and [Security](SECURITY.md) for reporting issues. Contributions should describe the workflow they enable, include verification evidence, and distinguish live integrations from fixtures.
+Consulte [Como contribuir](CONTRIBUTING.md) para orientações de desenvolvimento e [Segurança](SECURITY.md) para relatar problemas. As contribuições devem descrever o fluxo de trabalho que habilitam, incluir evidências de verificação e diferenciar integrações reais de simulações.
 
-## References
+## Referências
 
 - [AG-UI documentation](https://docs.ag-ui.com/introduction)
 - [CopilotKit documentation](https://docs.copilotkit.ai/intelligence/overview)
@@ -236,14 +236,14 @@ See [Contributing](CONTRIBUTING.md) for development guidance and [Security](SECU
 - [OpenBot](https://github.com/CopilotKit/openbot)
 - [OpenTag](https://github.com/CopilotKit/OpenTag) — Channels SDK integration reference
 
-## License
+## Licença
 
 [MIT](LICENSE).
 
-## Public-web research
+## Pesquisa na Web pública
 
-Parallel is selected by default in live research and Dot conversations. Ask a topic-only question to discover and read up to five sources, or supply URLs to extract them directly. Sources are saved with their links. A browser worker is not required for this research path; computer tools remain available for interactive work.
+O Parallel é selecionado por padrão para pesquisas reais e conversas com Dots. Faça uma pergunta sobre um tema para localizar e ler até cinco fontes ou informe URLs para extrair o conteúdo diretamente. As fontes são salvas com seus links. Este fluxo de pesquisa não exige um worker de navegador; as ferramentas de computador continuam disponíveis para tarefas interativas.
 
-`WEB_SEARCH_PROVIDER=browser` preserves the existing URL-only browser reader, and `WEB_SEARCH_PROVIDER=disabled` disables these research tools. Workspace and Dot research permissions, pause and cancellation controls still apply. Sample research remains fictional and does not contact a provider.
+`WEB_SEARCH_PROVIDER=browser` mantém o leitor de navegador existente, limitado a URLs, e `WEB_SEARCH_PROVIDER=disabled` desativa essas ferramentas de pesquisa. As permissões de pesquisa do espaço e do Dot, além dos controles de pausa e cancelamento, continuam valendo. Pesquisas de exemplo são fictícias e não contatam nenhum provedor.
 
-Queries, requested URLs, a stable session identifier and the research objective are sent to `https://search.parallel.ai/mcp`. Memories and complete conversations are not automatically forwarded to Parallel. Model-selected objectives may still contain context from the conversation. The anonymous service is free for light use with provider-managed limits; set `PARALLEL_API_KEY` on the server for production or higher limits. Provider errors and empty results are reported rather than replaced with invented evidence. See [Parallel Search MCP documentation](https://docs.parallel.ai/integrations/mcp/search-mcp).
+As consultas, URLs solicitadas, um identificador estável de sessão e o objetivo da pesquisa são enviados para `https://search.parallel.ai/mcp`. Memórias e conversas completas não são encaminhadas automaticamente ao Parallel. Objetivos definidos pelo modelo ainda podem incluir contexto da conversa. O serviço anônimo é gratuito para uso leve, sujeito aos limites do provedor; defina `PARALLEL_API_KEY` no servidor para produção ou limites maiores. Erros do provedor e resultados vazios são informados, sem substituição por evidências inventadas. Consulte a [documentação do Parallel Search MCP](https://docs.parallel.ai/integrations/mcp/search-mcp).
